@@ -6,6 +6,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-chat',
@@ -60,24 +61,26 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.setValores();
+    console.log();
   }
   
   ngAfterViewInit(): void {
     setTimeout(()=>
     {
     this.scrollUltimo();
-    console.log("aja");
+
     }, 1000);
   }
 
   async enviarMensaje(){
 
     if (this.nuevoMensaje == "") return;
-    this.no = this.mensajes.length + 1;
+    var idMsg = uuidv4();
+    this.no = new Date().getTime();
     this.pipe = new DatePipe('en-US');
     this.today = this.pipe.transform(Date.now(), 'MMM d, y, h:mm:ss a');
     
-    await this.db.object('chat/privado/' + 'roomID/' + this.no + ' - ' + this.today).set({
+    await this.db.object('chat/privado/' + 'roomID/' + idMsg + ' - ' + this.today).set({
       'mensaje': this.nuevoMensaje,
       'emisor': this.UserId,
       'fecha': this.today,
@@ -110,7 +113,12 @@ export class ChatComponent implements OnInit {
       this.scrollUltimo();
       }, 30);
 
+    }else{
+      
+      this.mensajes = msjdb;  
+      
     }
+      
     
 
   }
