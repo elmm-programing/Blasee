@@ -1,0 +1,32 @@
+<div class="body">
+    <div class="principal d-flex flex-column">  
+    
+        <div class="d-flex px-2 pt-2 pb-2 align-items-center bar-color height-bar">
+          
+            <label for="toggle">
+                <h2 class="i bi-arrow-left-short text-white"> 
+                </h2>
+        </label>
+          <h5 id="p" class="ps-4 text-white flex-grow-1">Perfil</h5>
+        </div>
+        <div class="d-flex flex-column overflow-auto principal_content principal_content_color">
+            
+            <img class="rounded-circle w-50 ms-auto me-auto pt-4 pb-4" [src]="profileUrl | async"   alt="">
+            
+            <div class="d-flex flex-column ps-5 pe-3">
+      
+                
+              <span class="pb-3 fw-bold labelColor">Nombre</span>
+      
+              <div class="pb-4"><input class="dataColor h6 bg-transparent" type="text" value="{{ name|async }} "><button class="btn bg-transparent bi bi-check-lg ms-2"></button></div>
+              
+              
+              <span class="pb-3 fw-bold labelColor">Acerca de mi</span>
+    
+              <div class="pb-2"><input class="dataColor h6 bg-transparent" type="text" value="{{ comentario|async }}"><button class="btn bg-transparent bi bi-check-lg ms-2"></button></div>
+         
+            </div>
+        </div>
+      </div>
+    </div>
+    

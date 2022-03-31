@@ -1,0 +1,22 @@
+<!--
+
+<nav class="navbar navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" *ngIf="UserLogged|async as user" >
+      <img  [src]="profileUrl | async"   width="40" height="44" class="d-inline-block align-text-top">
+      {{user.email}}
+    </a>
+    <form class="d-flex" *ngIf="UserLogged|async as user">
+
+      <button class="btn btn-outline-success" type="submit"(loadstart)="UserId = user.uid" (click)="obtenerUsuarioLogeado()">Usuario logeado</button>
+      <button class="btn btn-outline-success" type="submit" (click)="logout()">Logout</button>
+    </form>
+    
+  </div>
+</nav>
+-->
+
+  
+<app-perfil></app-perfil>
+<app-menu></app-menu>
+<app-chat></app-chat>

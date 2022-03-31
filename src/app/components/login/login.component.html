@@ -1,0 +1,31 @@
+<div class=" col-12   d-flex align-items-center  " style="height:100vh">
+
+    <div class="col-7 h-50 mx-auto row">
+      <div class="col-6" style="background-color:#384D6A; border-radius: 10px;">
+    <img src="../../../assets/Logo-2.png" class="d-block mx-auto pt-5 col-12" alt="">
+    <h1 class="text-light mx-auto col-7">¡Bienvenido!</h1>
+        </div>
+      <div class="col-6 " style="background-color:#F0F0F0; border-radius: 10px;">
+         <img src="../../../assets/Blase-Logo.png" alt="" class=" d-block mx-auto" width="45%">
+         <div class="col-12">
+    <form  class="col-12" >
+      <div class="mb-3 mx-auto   col-9" >
+          <input type="email" class="form-control"  placeholder="Correo" [(ngModel)]="usuario.email" name="email">
+      </div>
+      <div class="mb-3 mx-auto  col-9">
+    <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña" [(ngModel)]="usuario.password"  name="password">
+      </div>
+      <div class="mb-3 mx-auto col-7">
+    <input class="btn text-light col-12 text-wrap" style="background-color:#48DCE6 ;" type="submit" value="Iniciar Sesion"  (click)="Ingresar()">
+      </div>
+      <div class="mb-3 mx-auto  col-7">
+    
+        <input class="btn text-light col-12 text-wrap" style="background-color:#FC4F83 ;" type="submit" value="Iniciar Sesion" [routerLink]="['/registrar']" type="submit" value="Registrarse">
+         
+      </div>
+         </form>
+         </div>
+               
+    </div>
+    </div>  
+    

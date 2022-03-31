@@ -1,0 +1,100 @@
+.chat{
+    
+    width: 63rem;
+    height:45rem;
+    right: 0;
+    position: fixed;
+    border: none;
+
+}
+
+.name{
+    height:4rem;
+    background-color: #384E6A;
+}
+
+.name p{
+    color: white;
+    font-weight: bolder;
+}
+
+.card-body{
+    padding: 0.5rem;
+    background-image: url("../../../assets/background.jpg");
+}
+
+.mensajeria {
+
+    width: 60rem;
+    margin-left: 1.5rem;
+    margin-top: 40rem;
+    position: fixed;
+
+}
+
+.mensaje{
+    
+    box-shadow: 5px 3px 8px #888888;
+  }
+  
+.botones{
+  
+      margin-left: 0.5rem;
+      background-color: #384E6A;
+      font-weight: bolder;
+      border-radius: 2rem;
+  
+}
+
+.botones:hover{
+  
+    background-color: #384E6A;
+}
+
+.enviado{
+    box-shadow: 2px 3px 5px #888888;
+    display: block;
+    float: right;
+    background-color: #f7f9fa;
+    font-weight: bold;
+    min-width: 50.01%;
+    border-radius: 5px;
+    text-align: left;
+
+
+}
+
+.recibido{
+    box-shadow: 2px 3px 5px #888888;
+    display: block;
+    float: left;
+    background-color: #f7f9fa;
+    font-weight: bold;
+    min-width: 50.01%;
+    border-radius: 5px;
+    text-align: left;
+
+}
+
+.contenedorMensajes{
+    overflow-y: auto;
+    height: 80vh;
+}
+
+.contenedorMensajes::-webkit-scrollbar{
+    display: none;
+}
+
+.msj{
+    margin-top: 1rem;
+    max-width: 10rem;
+
+}
+
+.msj p {
+
+    font-size: 1rem;
+    float: right;
+    font-style: italic;
+
+}
