@@ -2,14 +2,14 @@
 <div class="container-fluid">
   <div class="row">
     <!-- 
-  -->
-
-  
   <button (click)="logout()" id="logout"></button>
 
   <label id="salir" for="logout">
     <img src="../../../assets/logout.png">
   </label>
+  -->
+
+  
 
 <input type="checkbox" id="toggle">
 <label id="salir" for="logout">
@@ -17,7 +17,7 @@
 
   <nav id="sidebarMenu" class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh; position: relative;">
     <div class="position-sticky p-0">
-<div class="pt-4 ps-4 bg-danger   ">
+<div class="banner pt-4 ps-4 img-responsive fit-image" >
   <label for="toggle">
 <a  class=" align-items-center   link-dark  ">
   <img id="img_perf" [src]="profileUrl | async" class="bi  rounded-circle" width="40" height="42" alt="">    
@@ -27,11 +27,17 @@
   
     <div class="form-group  has-search pb-1">
     <span class="bi bi-search form-control-feedback"></span>
+    <div class="input-group ">
       <select class="form-select" [(ngModel)]="newContact"  aria-label="Default select example">
         <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name]]" >{{ user.name  }}</option>
   </select>
-      <button class="btn btn-primary" (click)="AgregarContacto()"  type="submit">Agregar</button>
-  </div>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary botones"  (click)="AgregarContacto()" type="button">
+      <img src="../../../assets/add-user.png">
+    </button>
+   </div>
+    </div>
+    </div>
   <div class="container-fluid " id="please-scroll">
     <div class="row mb-4 bg-light">
       <div class="col-3 mr-0">
