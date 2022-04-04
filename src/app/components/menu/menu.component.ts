@@ -1,9 +1,11 @@
 import { Component,OnInit } from '@angular/core';
+
 import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -15,8 +17,23 @@ export class MenuComponent implements OnInit {
   UserLogged = this.loginService.getUserLogged(); 
   UserId:string|null|undefined;
   profileUrl: Observable<string | null>
+  newContact!:any; 
 
-  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage,db: AngularFireDatabase) {
+  allUsers:AngularFireList<any>;
+  users:Observable<any[]>;
+
+  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage,private db: AngularFireDatabase) {
+
+         this.allUsers = db.list('usuarios');
+	 this.users = this.allUsers.snapshotChanges().pipe( map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    }) )
+
+    this.users.subscribe( (action:any):any=>{
+      console.log(action);
+    
+    } )
+    console.log(this.users);
 
          this.UserId = this.route.snapshot.paramMap.get('uid');
 
@@ -26,17 +43,27 @@ export class MenuComponent implements OnInit {
       this.item = db.object(itemPath).valueChanges();
       console.log(this.item);
 */
-    console.log(this.UserId);
 const ref = this.storage.ref(`/users/${this.UserId}`);
      this.profileUrl = ref.getDownloadURL();
+     
 
 		
       }
+
+      public AgregarContacto(): any {
+	let arr:any[];
+	arr =this.newContact.split(',')
+	console.log(arr[0]);
+	console.log(arr[1]);
+	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
+	itemsRef.set(arr[1],{key:arr[0]});
+
+	
+
+      	
+      }
 public obtenerUsuarioLogeado() {
-  	
     this.loginService.getUserLogged().subscribe( res =>{
-      console.log(res?.email);
-      console.log(this.UserId);
       return res?.email;
     });
   }
@@ -49,6 +76,5 @@ public obtenerUsuarioLogeado() {
 
 
   ngOnInit(): void {
-    console.log(this.UserId);
   }
 }

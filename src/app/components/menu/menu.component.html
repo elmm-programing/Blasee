@@ -10,7 +10,7 @@
   <label id="salir" for="logout">
     <img src="../../../assets/logout.png">
   </label>
-  
+
 <input type="checkbox" id="toggle">
 <label id="salir" for="logout">
 </label>
@@ -27,7 +27,10 @@
   
     <div class="form-group  has-search pb-1">
     <span class="bi bi-search form-control-feedback"></span>
-    <input type="text" class="form-control" placeholder="Buscar usuario">
+      <select class="form-select" [(ngModel)]="newContact"  aria-label="Default select example">
+        <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name]]" >{{ user.name  }}</option>
+  </select>
+      <button class="btn btn-primary" (click)="AgregarContacto()"  type="submit">Agregar</button>
   </div>
   <div class="container-fluid " id="please-scroll">
     <div class="row mb-4 bg-light">
