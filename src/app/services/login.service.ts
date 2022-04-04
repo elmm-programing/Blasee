@@ -6,8 +6,12 @@ import firebase from "firebase/compat/app";
 })
 export class LoginService {
 
+  changeMenu:boolean = true;
   constructor(private afauth: AngularFireAuth) { }
 
+public CambiarSideBar():void {
+      this.changeMenu = !this.changeMenu;
+    }
 
  public async register( email: string, password: string)  {
     try{

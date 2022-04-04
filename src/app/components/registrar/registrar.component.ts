@@ -39,7 +39,7 @@ public Ingresar(): any {
 	const itemsRef = this.db.list('usuarios');
 	itemsRef.set(res.user.uid,{name:this.usuario.name,comentario:this.usuario.comentario});
 	this.uploadImage(res.user.uid);
-	this._router.navigateByUrl('/main')
+	  this._router.navigate(['main',{uid:res.user.uid}])
 	console.log("Se Registro correctamente: ",res.user.uid);
       } )	
     }else{

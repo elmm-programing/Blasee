@@ -15,7 +15,312 @@
   </div>
 </nav>
 -->
+<div class="container-fluid">
+  <div class="row">
 
-<app-menu></app-menu>
-<!--<app-chat></app-chat>
+    <nav id="sidebarMenu"  class="col-xs-3   col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh;">
+
+<app-perfil *ngIf="!changeMenu" (startReLoadData)="CambiarSideBar()"  ></app-perfil>
+      <div *ngIf="changeMenu" class="p-0">
+      	<div class="position-sticky p-0">
+<div class="pt-4 ps-4 bg-danger   ">
+<button class="btn p-0" (click)="CambiarSideBar()">
+
+<a  class=" align-items-center   link-dark  ">
+      <img  [src]="profileUrl | async" class="bi me-2 rounded-circle" width="40" height="42" alt="">
+    </a>
+</button>
+<button class="btn p-0 ms-5 me-5  "  ></button>
+<button class="btn p-0 ms-3  "  (click)="logout()" id="logout"></button>
+  <label id="salir" for="logout" style="cursor:pointer">
+    <img src="../../../assets/logout.png">
+  </label>
+  </div>
+    <div class="input-group ">
+      <select class="form-select" [(ngModel)]="newContact"  aria-label="Default select example">
+        <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name]]" >{{ user.name  }}</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary botones"  (click)="AgregarContacto()" type="button">
+      <img src="../../../assets/add-user.png">
+    </button>
+   </div>
+  <div class="container-fluid " id="please-scroll">
+    <div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+
+
+  	
+  </div>
+
+    </div>
+
+
+      </div>
+
+      
+     </div>
+    </nav>
+
+    <main class="col-xs-9 col-sm-9 col-md-9  col-lg-10  p-0">
+<nav class="navbar " style="background-color: #384D6A;">
+  <div class="container-fluid align-items-center">
+    <ul class="nav">
+  <li class="nav-item">
+      <img src="../../../assets/unknown.png"  width="40" height="42" class="d-inline-block rounded-circle align-text-top">
+  </li>
+    <li class="nav-item">
+      <h4 class="pt-2 ps-3 text-light">Helen</h4>
+  </li>
+</ul>
+  </div>
+</nav>
+
+<app-chat></app-chat>
+<!--
+<div class="container bg-dark" style="height:85vh">
+
+</div>
+<div class="container-fluid" style="background-color: #384D6A;height: 61.5px;">
+	<div class="input-group ">
+  <input type="text" class="form-control pb-3" placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
+  <button class="btn btn-outline-secondary" type="button"><i class="bi bi-send " style="color:white"></i></button>
+  <button class="btn btn-outline-secondary" type="button"><i class="bi bi-link-45deg" style="color:white"></i></button>
+</div>
+
+</div>
+-->
+    </main>
+  </div>
+</div>
+
+<!--
 <app-perfil></app-perfil>-->

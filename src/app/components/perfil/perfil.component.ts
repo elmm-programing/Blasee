@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,Output,EventEmitter } from '@angular/core';
 import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
@@ -11,6 +11,8 @@ import {Observable} from 'rxjs';
   styleUrls: ['./perfil.component.css']
 })
 export class PerfilComponent implements OnInit {
+@Output()
+startReLoadData: EventEmitter<any> = new EventEmitter<any>(); 
 
   UserLogged = this.loginService.getUserLogged(); 
   UserId:string|null|undefined;
@@ -19,6 +21,7 @@ export class PerfilComponent implements OnInit {
   name: Observable<any>;;
   comentarioItemRef: AngularFireObject<any>;
   comentario: Observable<any>;;
+
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage,db: AngularFireDatabase) {
 
@@ -42,8 +45,13 @@ const ref = this.storage.ref(`/users/${this.UserId}`);
      this.profileUrl = ref.getDownloadURL();
 
 		
+
       }
-public obtenerUsuarioLogeado() {
+public HidePerfil(){
+  this.startReLoadData.emit();
+
+    }
+        public obtenerUsuarioLogeado() {
   	
     this.loginService.getUserLogged().subscribe( res =>{
       console.log(res?.email);

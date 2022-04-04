@@ -4,17 +4,17 @@
       <form  class="col-12" >
 		   <img src="../../../assets/Blase-Logo.png" alt="" class=" d-block mx-auto mb-1" width="45%">
 <div class="mb-2 mx-auto   col-9" >
-      <input type="text" class="form-control "  placeholder="Nombre"  name="name">
+      <input type="text" class="form-control "  placeholder="Nombre" [(ngModel)]="usuario.name" name="name">
   </div>
 
   <div class="mb-2 mx-auto   col-9" >
-      <input type="email" class="form-control "  placeholder="Correo"  name="email">
+      <input type="email" class="form-control "  placeholder="Correo" [(ngModel)]="usuario.email" name="email">
   </div>
   <div class="mb-2 mx-auto  col-9 ">
-<input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña"   name="password">
+<input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña" [(ngModel)]="usuario.password"  name="password">
   </div>
   <div class=" mb-2 mx-auto col-5">
-<input class="btn  text-light col-12 text-wrap" style="background-color:#FC4F83 ;" type="submit" value="Registrarse"  >
+<input class="btn  text-light col-12 text-wrap" style="background-color:#FC4F83 ;" (click)="Ingresar()" type="submit" value="Registrarse"  >
   </div>
   <div class=" mx-auto text-center  col-5">
     <a [routerLink]="['/login']" class="btn  text-light col-12 text-wrap" style="background-color:#48DCE6 ;" type="submit" >Volver</a> 
@@ -32,7 +32,7 @@
 <label class="btn text-light col-12 text-wrap" style="background-color:#FC4F83;" for="upload">Subir imagen</label>
 </div>
 <div class="mx-auto col-8">
-      <input type="text" class="form-control mx-auto  col-12 text-wrap" placeholder="Comentario de perfil" name="comentario">
+      <input type="text" class="form-control mx-auto  col-12 text-wrap" placeholder="Comentario de perfil" [(ngModel)]="usuario.comentario" name="comentario">
           </div>
   </div>
 </div>

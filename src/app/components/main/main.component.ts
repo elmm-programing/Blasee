@@ -1,11 +1,12 @@
 import { Component,OnInit } from '@angular/core';
 import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -22,7 +23,18 @@ export class MainComponent implements OnInit {
   comentario: Observable<any>;
   nuevoMensaje: string = "";
 
+  newContact!:any; 
+  allUsers:AngularFireList<any>;
+  users:Observable<any[]>;
+  changeMenu:boolean = this.loginService.changeMenu;
+
+
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase) {
+
+this.allUsers = db.list('usuarios');
+	 this.users = this.allUsers.snapshotChanges().pipe( map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    }) )
 
 
     this.UserId = this.route.snapshot.paramMap.get('uid');
@@ -37,7 +49,26 @@ export class MainComponent implements OnInit {
     this.profileUrl = ref.getDownloadURL();
 
     }
+    public CambiarSideBar(){
+      this.loginService.CambiarSideBar();
+      this.changeMenu  = !this.changeMenu;
 
+
+
+    }
+   
+public AgregarContacto(): any {
+	let arr:any[];
+	arr =this.newContact.split(',')
+	console.log(arr[0]);
+	console.log(arr[1]);
+	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
+	itemsRef.set(arr[1],{key:arr[0]});
+
+	
+
+      	
+      }
     public obtenerUsuarioLogeado() {
         
         this.loginService.getUserLogged().subscribe( res =>{

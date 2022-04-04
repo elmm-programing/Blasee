@@ -1,17 +1,11 @@
 <div class="principal col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light d-flex flex-column">  
     
         <div class=" d-flex px-2 pt-2 pb-2 align-items-center bar-color height-bar">
-          
-            <label for="toggle" style="
-            cursor: pointer;
-            display: flex;
-            height: 30px;
-            flex-direction: column;
-            justify-content: space-between;">
-                <h2 class="i bi-arrow-left-short text-white"> 
-                </h2>
-        </label>
-          <h5 id="p" class="ps-4 text-white flex-grow-1">Perfil</h5>
+          <button class="btn p-0" (click)="HidePerfil()">
+
+	    <h2 class="i bi-arrow-left-short text-white pt-3"></h2> 
+	  </button>
+                      <h5 id="p" class="ps-4 text-white flex-grow-1">Perfil</h5>
         </div>
         <div class="d-flex flex-column overflow-auto principal_content principal_content_color" style="height: 100%;">
             
