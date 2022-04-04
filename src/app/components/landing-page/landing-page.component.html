@@ -1,73 +1,102 @@
+
 <nav class="navbar navbar-light " style="background-color: #364F6B;">
-    <div class="container-fluid">
-      <a class="navbar-brand text-light">Blase</a>
-      <form class="d-flex">
-        <button class="btn me-2 text-light" [routerLink]="['/login']" style="background-color: #43DDE6; "type="submit">Iniciar Sesion</button>
-        <button class="btn text-light" [routerLink]="['/registrar']" style="background-color: #FC5185; "type="submit">Registrarse</button>
-      </form>
-    </div>
-  </nav>
-  <div class=" d-flex  col-12 justify-content-center pt-5 "   style="height: 30vw;background-color:#F0F0F0"> 
-  <div class="card mb-3 col-9 h-75" >
-    <div class="row g-0 h-100">
-      <div class="col-md-4 ">
-        <img src="../../../assets/Logo.png" class="img-fluid rounded-start h-100" style="background-color:#364F6B " alt="...">
-      </div>
-      <div class="col-md-8 h-100" >
-        <div class="card-body" >
-          <h1 class="card-title">Blase</h1>
-          <h4 class="card-text pt-3">Blase es el nombre de nuestra aplicación web de mensajería. ¡Te damos la bienvenida!</h4>
-      <a [routerLink]="['/login']" ><h5 class="card-text"><small class="text-muted">Empezar </small></h5>
-  </a>
-  
-        </div>
-      </div>
-    </div>
+  <div class="container-fluid">
+    <a class="navbar-brand text-light">Blase</a>
+    <form class="d-flex">
+      <button class="btn me-2 text-light" [routerLink]="['/login']" style="background-color: #43DDE6; "type="submit">Iniciar Session</button>
+      <button class="btn text-light" [routerLink]="['/registrar']" style="background-color: #FC5185; "type="submit">Registrarse</button>
+    </form>
   </div>
+</nav>
+<main>
+   <section class="py-5 text-center container-fluid" style="background-color:#F0F0F0">
+    <div class="row py-lg-5  justify-content-center">
+      <div class="col-md-12 col-lg-5  " style="background-color:#384D6A">
+	      <img src="../../../assets/Logo.png" class="img-fluid    " alt=""  >
+
+      </div>
+      <div class="col-md-12 col-lg-6   text-start" style="background-color:white">
+        <h1 class="">Blase</h1>
+	<h4 class=" pt-4 pb-5">Blase es el nombre de nuestra aplicacion web de mensajeria. ¡Te damos la bienvenida!</h4>
+
+	<a [routerLink]="['/login']" class=""><h5 class=""><small class="text-muted">¡Empieza ahora! </small></h5>
+</a>
+
+
+      </div>
+
+    </div>
+  </section>
+
+    <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+
+  <div class="container-fluid  pt-5 pb-5" style="background-color:#364F6B ">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row mx-auto  text-center text-light">
+      <div class="col-lg-4 border p-5">
+
+    <img src="../../../assets/diseño.png" width="50px" height="70px" class="d-block mx-auto" alt="...">
+
+<h4 class="" style="color:#FC5185 ">Diseño atractivo</h4>
+      <p class=" ">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 border p-5">
+    <img src="../../../assets/codigo.png" width="50px" height="70px" class="d-block mx-auto" alt="...">
+
+<h4 class="" style="color:#FC5185 ">Código seguro</h4>
+      <p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4 border p-5">
+    <img src="../../../assets/nuevos.png" width="50px" height="70px" class="d-block mx-auto" alt="...">
+
+<h4 class="" style="color:#FC5185 ">Nuevos rasgos</h4>
+      <p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
+<div class=" d-flex  col-12 justify-content-center pt-5 "   style="background-color:#FC5185  "> 
+  <div class="d-flex flex-column bd-highlight mb-3">
+  <div class="p-2 bd-highlight">
+  <h1 class="text-light ">Grupo de desarrollo</h1>
+</div>
+  <div class="p-2 bd-highlight"></div>
+</div>
+
+</div>
+ 
+</main> 
+
+<footer class="footer mt-auto py-3" style="background-color: #364F6B;">
+  <div class="container-fluid col-12">
+    <h5 class="text-light text-center">Todos los derechos reservados a ©Blase</h5>
   </div>
-  <div class=" d-flex  col-12 justify-content-center pt-5 "   style="height: 30vw;background-color:#364F6B "> 
-    <div class="card-group col-9 h-75 ">
-    <div class="card col-12 border-light" style="background-color:#364F6B ">
-          
-      <img src="../../../assets/diseño.png" width="50px" height="70px" class="mx-auto" alt="...">
+</footer>
+<!--
+<main class="container-fluid pt-5 bg-primary" style="height:65vh">
+  <div class="bg-light  rounded h-100" >
+    <div class="card  h-100" >
+  <div class="row  h-100">
+    <div class="col-md-4 " >
+      <img src="../../../assets/Logo.png" class="img-fluid    " alt=""  >
+    </div>
+    <div class="col-md-8 h-100">
       <div class="card-body">
-        <h4 class="card-title text-center" style="color:#FC5185 ">Diseño atractivo</h4>
-        <p class="card-text text-light text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-    </div>
-    <div class="card border-light" style="background-color:#364F6B ">
-      <img src="../../../assets/codigo.png" width="50px" height="70px" class="mx-auto" alt="...">
-      <div class="card-body">
-        <h4 class="card-title text-center" style="color:#FC5185 ">Código seguro</h4>
-        <p class="card-text text-light text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      </div>
-    </div>
-    <div class="card border-light " style="background-color:#364F6B ">
-      <img src="../../../assets/nuevos.png" width="50px" height="70px" class="mx-auto" alt="...">
-      <div class="card-body">
-        <h4 class="card-title text-center" style="color:#FC5185 ">Nuevos rasgos</h4>
-        <p class="card-text text-light text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        <h1 class="card-title">Blase</h1>
+        <h4 class="card-text pt-3">Blase es el nombre de nuestra aplicación web de mensajería. ¡Te damos la bienvenida!</h4>
+
+	<a [routerLink]="['/login']" ><h5 class="card-text"><small class="text-muted">Get started </small></h5>
+</a>
       </div>
     </div>
   </div>
+</div>
+
   </div>
-  <div class=" d-flex  col-12 justify-content-center pt-5 "   style="height: 35vw;background-color:#FC5185  "> 
-    <div class="d-flex flex-column bd-highlight mb-3">
-    <div class="p-2 bd-highlight">
-    <h1 class="text-light ">Grupo de desarrollo</h1>
-  </div>
-    <div class="p-2 bd-highlight"></div>
-  </div>
-  
-  </div>
-        
-     
-  
-  
-  <footer class="footer mt-auto py-3" style="background-color: #364F6B;">
-    <div class="container-fluid col-12">
-      <h4 class="text-light text-center">Blase</h4>
-      <h5 class="text-light text-center">©Blase all rights reserved</h5>
-    </div>
-  </footer>
-  
+</main>
+
+<div class="container">holamundo</div>
+-->

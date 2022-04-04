@@ -6,26 +6,19 @@
     display: none;
   }
   
-  
-  
-#toggle:checked~#menu{
+#toggle:checked~#sidebarMenu{
   transition: 1s left;
-    left: -100%;
-
+  left: -100%;
 
 }
 
-#toggle~#menu{
+#toggle~#sidebarMenu{
+  transition: 0.3s left;
   left: 0;
 
 }
 
-
-
 label[for=toggle]{
     cursor: pointer;
     display: flex;
-    height: 30px;
-    flex-direction: column;
-    justify-content: space-between;
   }

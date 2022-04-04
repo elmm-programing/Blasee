@@ -1,51 +1,271 @@
 
-<div class="body">
-    <div id="wrapper">
+<div class="container-fluid">
+  <div class="row">
+    <!-- 
+  -->
+
+  
+  <button (click)="logout()" id="logout"></button>
+
+  <label id="salir" for="logout">
+    <img src="../../../assets/logout.png">
+  </label>
   
 <input type="checkbox" id="toggle">
-      <button (click)="logout()" id="logout"></button>
+<label id="salir" for="logout">
+</label>
+
+  <nav id="sidebarMenu" class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh; position: relative;">
+    <div class="position-sticky p-0">
+<div class="pt-4 ps-4 bg-danger   ">
+  <label for="toggle">
+<a  class=" align-items-center   link-dark  ">
+  <img id="img_perf" [src]="profileUrl | async" class="bi  rounded-circle" width="40" height="42" alt="">    
+</a>
+</label>
+  </div>
   
-  
-      <div id="menu">
-        <label id="salir" for="logout">
-        <img src="../../../assets/logout.png">
-      </label>
-        <ul>
-          <li id="perfil"><a>
-            <div id="perfil">
-              <label for="toggle">
-              <img id="img_perf" [src]="profileUrl | async" alt="">
-             </label>
-            </div>
-          </a></li>
-          
-          <li><a >
-            <div class="option">
-              <img src="../../../assets/unknown.png" alt="">
-              <div class="box">
-                <h3>Pedro</h3>
-              </div>
-            </div>
-          </a></li>
-  
-          <li><a >
-            <div class="option">
-              <img src="../../../assets/unknown.png" alt="">
-              <div class="box">
-                <h3>Pedro</h3>
-              </div>
-            </div>
-          </a></li>
-  
-          <li><a >
-            <div class="option">
-              <img src="../../../assets/unknown.png" alt="">
-              <div class="box">
-                <h3>Pedro</h3>
-              </div>
-            </div>
-          </a></li>
-  
-        </ul>
+    <div class="form-group  has-search pb-1">
+    <span class="bi bi-search form-control-feedback"></span>
+    <input type="text" class="form-control" placeholder="Buscar usuario">
+  </div>
+  <div class="container-fluid " id="please-scroll">
+    <div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
       </div>
-</div>  
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+<div class="row mb-4 bg-light">
+      <div class="col-3 mr-0">
+      	
+      <img src="../../../assets/unknown.png" class="bi  rounded-circle" width="40" height="42" alt="">
+      </div>
+    	<div class="col-9 pt-2  ">
+      	<h5 class="text-dark">Hola</h5>
+      </div>
+
+    </div>
+
+
+  	
+  </div>
+
+     </div>
+    </nav>
+</div>
+</div>

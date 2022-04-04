@@ -1,9 +1,19 @@
-<div class="card text-center chat">
-    <div class="card-header name">
-      <p>CHAT</p>
-    </div>
-
-    <div class="card-body" *ngIf="UserLogged">
+<div class="container-fluid">
+  <div class="row">
+<main class="col-xs-9 col-sm-9 col-md-9  col-lg-10  p-0">
+    <nav class="navbar " style="background-color: #384D6A;">
+      <div class="container-fluid align-items-center">
+        <ul class="nav">
+      <li class="nav-item">
+          <img src="../../../assets/unknown.png"  width="40" height="42" class="d-inline-block rounded-circle align-text-top">
+      </li>
+        <li class="nav-item">
+          <h4 class="pt-2 ps-3 text-light">Helen</h4>
+      </li>
+    </ul>
+      </div>
+    </nav>
+    <div class="container bg-dark" *ngIf="UserLogged" style="height:85vh">
       <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
         <div *ngFor="let mensaje of mensajes" class="msj p-2"
@@ -14,13 +24,11 @@
 
       </div>
     </div>
-
-
-    <form class="card-footer text-muted input-group mensajeria" (ngSubmit)="enviarMensaje()">
-
-      <input type="text" class="form-control mensaje" [(ngModel)]="nuevoMensaje"
-      [ngModelOptions]="{standalone:true}" placeholder="Escribe tu mensaje" aria-label="Recipient's username" aria-describedby="basic-addon2">
-
+    <form class="container-fluid" style="background-color: #384D6A;height: 61.5px;" (ngSubmit)="enviarMensaje()">
+      <div class="input-group ">
+      <input type="text" class="form-control pb-3" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
+      [ngModelOptions]="{standalone:true}" aria-label="Recipient's username with two button addons">
+      
       <div class="input-group-append" (click)="enviarMensaje()">
 
         <button class="btn btn-outline-secondary botones" type="button" (click)="enviarMensaje()">
@@ -31,7 +39,10 @@
         </button>
 
         </div>
-
-      </form>
-
+      </div>
+    
+    
+    </form>
+  </main>
   </div>
+</div>

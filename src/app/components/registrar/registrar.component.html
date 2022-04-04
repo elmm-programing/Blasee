@@ -1,67 +1,38 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"/>
-<div class=" col-12   d-flex align-items-center  " style="height:100vh">
-
-<div class="col-md-7 h-50 mx-auto row   ">
-  <div class="col-6 " style="background-color:#F0F0F0; border-radius: 10px;">
-	   <img src="../../../assets/Blase-Logo.png" alt="" class=" d-block mx-auto" width="45%">
-	   <div class="col-12">
-<form  class="col-12" >
-  <div class="mb-3 mx-auto   col-9" >
-          <input type="text" class="form-control "  placeholder="Nombre" [(ngModel)]="usuario.name" name="name">
-
-  </div>
-  <div class="mb-3 mx-auto  col-9">
-          <input type="email" class="form-control"  placeholder="Correo" [(ngModel)]="usuario.email" name="email">
-
-  </div>
-    <div class="mb-3 mx-auto  col-9">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña" [(ngModel)]="usuario.password"  name="password">
-
+<div class="container-fluid justify-content-center  " style="height: 100vh">
+  <div class="row  align-items-center justify-content-center  h-100"  >
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4  h-50" style="background-color:#F0F0F0; border-radius: 10px;">
+      <form  class="col-12" >
+		   <img src="../../../assets/Blase-Logo.png" alt="" class=" d-block mx-auto mb-1" width="45%">
+<div class="mb-2 mx-auto   col-9" >
+      <input type="text" class="form-control "  placeholder="Nombre"  name="name">
   </div>
 
-  <div class="mb-3 mx-auto  col-7">
-    <input class="btn  text-light col-12 text-wrap" style="background-color:#48DCE6 ;"  type="submit" value="Registrarse" (click)="Ingresar()">
+  <div class="mb-2 mx-auto   col-9" >
+      <input type="email" class="form-control "  placeholder="Correo"  name="email">
   </div>
- 
+  <div class="mb-2 mx-auto  col-9 ">
+<input type="password" class="form-control" id="floatingPassword" placeholder="Contraseña"   name="password">
+  </div>
+  <div class=" mb-2 mx-auto col-5">
+<input class="btn  text-light col-12 text-wrap" style="background-color:#FC4F83 ;" type="submit" value="Registrarse"  >
+  </div>
+  <div class=" mx-auto text-center  col-5">
+    <a [routerLink]="['/login']" class="btn  text-light col-12 text-wrap" style="background-color:#48DCE6 ;" type="submit" >Volver</a> 
+     
+  </div>
      </form>
-	   </div>
-           
+
+          </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4 justify-content-center   h-50" style="background-color:#384D6A; border-radius: 10px;">
+
+      <img src="../../../assets/update.jpg" class="d-block mx-auto pt-3 col-8" alt=""  height="70%">
+<div class="mb-2 mt-2 text-center mx-auto col-6">
+
+  <input type="file" id="upload" class="btn text-light" (change)="upload($event)" style="display:none;" accept=".png,.jpg" />
+<label class="btn text-light col-12 text-wrap" style="background-color:#FC4F83;" for="upload">Subir imagen</label>
 </div>
-
-	<div class="col-6" style="background-color:#384D6A; border-radius: 10px;">
-	  <img src="../../../assets/update.jpg" class="mx-auto d-block pt-5 col-9"  alt="">
-<div class="mb-3 mx-auto col-8">
-<div class="mb-3 mx-auto mt-3 col-12"> 
-  <label class="btn text-light col-12 text-wrap" style="background-color:#FC4F83;" for="upload">Subir imagen</label>
-<input type="file" id="upload" class="btn text-light" (change)="upload($event)" style="display:none;" accept=".png,.jpg" />
-</div>
-
-</div>
-<div class="mb-3 mx-auto col-8">
-      <input type="text" class="form-control mx-auto  col-12 text-wrap"   placeholder="Comentario de perfil" [(ngModel)]="usuario.comentario" name="comentario">
-</div>
-
-	  </div>
-
-	</div>
-<!--
-  <div class="main-container">
-    <div class="container">
-      <div class="form-container">
-        <div class="image-2">
-          <img src="../../../assets/Blase-Logo.png" alt="">
-        </div>
-        <div class="form-register">
-          <form action="" class="form-r">
-    <input class="btn-1" type="submit" value="Registrarse con google" (click)="IngresarWithGoogle()">
-
-            
-          </form>    
-        </div>
-      </div>
-      <div class="form-logo">
-              </div>
-    </div>
+<div class="mx-auto col-8">
+      <input type="text" class="form-control mx-auto  col-12 text-wrap" placeholder="Comentario de perfil" name="comentario">
+          </div>
   </div>
-
--->
+</div>

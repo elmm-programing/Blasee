@@ -8,21 +8,16 @@
     font-family: 'Inter', sans-serif;
 }
 
-.body{
-    padding: 0;
-    margin: 0;
-  }
 
 .principal {
-    width: 20%;
     left: 0;
     position: fixed;
     transition: 0.3s left;
+    height: 100vh;
 }
 
 
 .bar-color {
-    height: 4rem;
     background-color: #384D6A;
 }
 
