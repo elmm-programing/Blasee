@@ -12,7 +12,6 @@ import { MainComponent } from './components/main/main.component';
 import { RegistrarComponent } from './components/registrar/registrar.component';
 import { AngularFireStorageModule,BUCKET  } from '@angular/fire/compat/storage';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { MenuComponent } from './components/menu/menu.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
@@ -29,7 +28,6 @@ import { ChatComponent } from './components/chat/chat.component';
     MainComponent,
     RegistrarComponent,
     LandingPageComponent,
-    MenuComponent,
     PerfilComponent,
     ChatComponent,
     

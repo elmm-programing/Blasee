@@ -1,5 +1,5 @@
 
-    <div class="container bg-dark p-1" *ngIf="UserLogged" style="height:85vh">
+    <div class="container-fluid bg-dark" *ngIf="UserLogged" style="height: 82.5vh;">
       <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
         <div *ngFor="let mensaje of mensajes" class="msj p-2"
@@ -10,12 +10,12 @@
 
       </div>
     </div>
-    <form class="container-fluid" style="background-color: #384D6A;height: 61.5px;" (ngSubmit)="enviarMensaje()">
+    <form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
       <div class="input-group ">
-      <input type="text" class="form-control pb-3" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
-      [ngModelOptions]="{standalone:true}" aria-label="Recipient's username with two button addons">
+      <input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
+      [ngModelOptions]="{standalone:true}" aria-label="Recipient's username" aria-describedby="basic-addon2">
       
-      <div class="input-group-append" (click)="enviarMensaje()">
+      <div class="input-group-append pt-2">
 
         <button class="btn btn-outline-secondary botones" type="button" (click)="enviarMensaje()">
           <img src="../../../assets/send.png">

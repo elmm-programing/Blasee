@@ -32,15 +32,10 @@
 
 }
 
-.mensaje{
-    
-    box-shadow: 5px 3px 8px #888888;
-  }
   
 .botones{
   
       margin-left: 0.5rem;
-      background-color: #384E6A;
       font-weight: bolder;
       border-radius: 2rem;
   
@@ -48,7 +43,7 @@
 
 
 .enviado{
-    box-shadow: 2px 3px 5px #888888;
+    box-shadow: 2px 3px 3px #888888;
     display: block;
     float: right;
     background-color: #f7f9fa;
@@ -61,7 +56,7 @@
 }
 
 .recibido{
-    box-shadow: 2px 3px 5px #888888;
+    box-shadow: 2px 3px 3px #888888;
     display: block;
     float: left;
     background-color: #f7f9fa;

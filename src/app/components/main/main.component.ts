@@ -27,7 +27,8 @@ export class MainComponent implements OnInit {
   allUsers:AngularFireList<any>;
   users:Observable<any[]>;
   changeMenu:boolean = this.loginService.changeMenu;
-
+  public contactos: Contactos[] = [];
+  profileUrlC: Observable<string | null>[] = [];
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase) {
 
@@ -48,27 +49,58 @@ this.allUsers = db.list('usuarios');
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
 
+    this.setValores();
     }
     public CambiarSideBar(){
       this.loginService.CambiarSideBar();
       this.changeMenu  = !this.changeMenu;
-
-
 
     }
    
 public AgregarContacto(): any {
 	let arr:any[];
 	arr =this.newContact.split(',')
-	console.log(arr[0]);
-	console.log(arr[1]);
 	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
-	itemsRef.set(arr[1],{key:arr[0]});
+	itemsRef.set(arr[0],{nombre:arr[1], id:arr[0]});
+  this.setValores();
+  location.reload();
+  }
 
-	
 
-      	
-      }
+  
+  async setValores(){
+    
+    var cont!: Contactos[];
+    var ids!:any[];
+    
+    await this.ObtenerContactos().then(value => {
+      cont = value as Contactos[];
+      ids = cont.map(element =>{
+        return element.id;
+      });
+    });
+
+    for(let i=0;i<ids.length;i++){
+
+      const ref2 = this.storage.ref(`/users/${ids[i]}`);
+      this.profileUrlC.push(ref2.getDownloadURL());
+    }
+
+    this.contactos = cont;
+
+  }
+
+  async ObtenerContactos(){
+
+    return new Promise((resolve, reject)=>{
+      this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges().subscribe(
+        value => {
+          resolve(value);
+        });
+
+    });
+
+  }
     public obtenerUsuarioLogeado() {
         
         this.loginService.getUserLogged().subscribe( res =>{
@@ -85,7 +117,24 @@ public AgregarContacto(): any {
 
 
   ngOnInit(): void {
+    
   }
 
 
+  public Chats(){
+  
+  }
+  
+}
+
+
+class Contactos {
+  constructor(nombre: string, id: string) {
+    this.nombre = nombre;
+    this.id = id;
+  }
+
+  public nombre!: string;
+  public id!: string;
+  
 }

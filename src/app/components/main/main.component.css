@@ -17,3 +17,17 @@
   height: calc(100vh - 110px);
   overflow-y: scroll;
 }
+
+.banner{
+  background-color: #FC5185;
+}
+
+.botones:hover{
+  background-color: #FC5185;
+
+}
+.contactos:hover{
+  box-shadow: 2px 3px 3px #888888;
+  transition: 300ms;
+
+}
