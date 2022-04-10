@@ -32,6 +32,8 @@ export class MainComponent implements OnInit {
   public ids: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
   changeChat:boolean = false;
+  existencia:any;
+  contactoAgregado:any;
   
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
@@ -68,14 +70,36 @@ public AgregarContacto(): any {
 	let arr:any[];
 	arr =this.newContact.split(',')
 	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
-	itemsRef.set(arr[0],{nombre:arr[1], id:arr[0]});
-	const itemsRef2 = this.db.list(`chat/privado`);
-  itemsRef2.set(this.UserId + ' y ' + arr[0],{usuarios:this.UserId + ' y ' + arr[0]});
-  
+  this.contactoAgregado = arr[0];
+  this.Existencia();
+  itemsRef.set(arr[0],{nombre:arr[1], id:arr[0]});
+
+  if(this.existencia == false){
+    const itemsRef2 = this.db.list(`chat/privado`);
+    itemsRef2.set(this.UserId + ' y ' + arr[0],{usuarios:this.UserId + ' y ' + arr[0]});
+  }
   location.reload();
   this.setValores();
   }
 
+
+  public Existencia(){
+    
+    this.db.database.ref(`chat/privado/${this.UserId} y ${this.contactoAgregado}`).once('value', (snapshot) => {
+      if(snapshot.exists() == true){
+        this.setExistencia(true);
+      }else{
+        this.setExistencia(false);
+      }
+     });
+
+
+  }
+
+  public setExistencia(existencia:boolean){
+    this.existencia = existencia;
+    console.log(this.existencia);
+  }
 
   
   async setValores(){

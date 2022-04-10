@@ -89,7 +89,8 @@ export class ChatComponent implements OnInit {
     this.no = new Date().getTime();
     this.pipe = new DatePipe('en-US');
     this.today = this.pipe.transform(Date.now(), 'MMM d, y, h:mm:ss a');
-    if(this.existencia){
+
+    if(this.existencia == true){
 
       await this.db.object(`chat/privado/${this.UserId} y ${this.contacto}/Mensajes/${idMsg} - ${this.today}`).set({
         'mensaje': this.nuevoMensaje,
@@ -146,8 +147,7 @@ export class ChatComponent implements OnInit {
   }
 
   async obtenerMensajes(){
-
-    if(this.existencia){
+    if(this.existencia == true){
     return new Promise((resolve, reject)=>{
       this.db.list(`chat/privado/${this.UserId} y ${this.contacto}/Mensajes`, ref=>
       ref.orderByChild('no').limitToLast(25)).valueChanges().subscribe(
@@ -171,7 +171,7 @@ export class ChatComponent implements OnInit {
   public Existencia(){
     
     this.db.database.ref(`chat/privado/${this.UserId} y ${this.contacto}`).once('value', (snapshot) => {
-      if(snapshot.exists()){
+      if(snapshot.exists() == true){
         this.setExistencia(true);
       }else{
         this.setExistencia(false);
