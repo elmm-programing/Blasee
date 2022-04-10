@@ -1,28 +1,32 @@
-<div class="principal col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light d-flex flex-column">  
-    
-        <div class=" d-flex px-2 pt-2 pb-2 align-items-center bar-color height-bar">
-          <button class="btn p-0" (click)="HidePerfil()">
+<div class="principal col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light d-flex flex-column">
 
-	    <h2 class="i bi-arrow-left-short text-white pt-3"></h2> 
-	  </button>
-                      <h5 id="p" class="ps-4 text-white flex-grow-1">Perfil</h5>
-        </div>
-        <div class="d-flex flex-column overflow-auto principal_content principal_content_color" style="height: 100%;">
-            
-            <img class="rounded-circle w-50 ms-auto me-auto pt-4 pb-4" [src]="profileUrl | async"   alt="">
-            
-            <div class="d-flex flex-column ps-5 pe-3">
-      
-                
-              <span class="pb-3 fw-bold labelColor">Nombre</span>
-      
-              <div class="pb-4"><input class="dataColor h6 bg-transparent" type="text" value="{{ name|async }} "><button class="btn bg-transparent bi bi-check-lg ms-2"></button></div>
-              
-              
-              <span class="pb-3 fw-bold labelColor">Acerca de mi</span>
-    
-              <div class="pb-2"><input class="dataColor h6 bg-transparent" type="text" value="{{ comentario|async }}"><button class="btn bg-transparent bi bi-check-lg ms-2"></button></div>
-         
-            </div>
-        </div>
+  <div class=" d-flex px-2 pt-2 pb-2 align-items-center bar-color height-bar">
+    <button class="btn p-0" (click)="HidePerfil()">
+
+      <h2 class="i bi-arrow-left-short text-white pt-3"></h2>
+    </button>
+    <h5 id="p" class="ps-4 text-white flex-grow-1">Perfil</h5>
+  </div>
+  <div class="d-flex flex-column overflow-auto principal_content principal_content_color" style="height: 100%;">
+
+    <img class="rounded-circle w-50 ms-auto me-auto pt-4 pb-4" [src]="profileUrl | async" alt="">
+
+    <div class="d-flex flex-column ps-5 pe-3">
+
+
+      <span class="pb-3 fw-bold labelColor">Nombre</span>
+
+      <div class="pb-4">
+        <input id="inputName" class="dataColor h6 bg-transparent" type="text" [(ngModel)]="nombreInput" value="{{ name|async }}" (change)="ocultarBotonNombre()">
+        <button class="btn bg-transparent bi bi-check-lg ms-2" [hidden]="botonNombre" (click)="actualizarNombre()"></button>
       </div>
+
+      <span class="pb-3 fw-bold labelColor">Acerca de mi</span>
+
+      <div class="pb-2"><input id="inputComentario" class="dataColor h6 bg-transparent" type="text" [(ngModel)]="comentarioInput" value="{{ comentario|async }}" (change)="ocultarBotonComentario()">
+        <button class="btn bg-transparent bi bi-check-lg ms-2" [hidden]="botonComentario" (click)="actualizarComentario()"></button>
+      </div>
+
+    </div>
+  </div>
+</div>

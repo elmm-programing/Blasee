@@ -1,32 +1,44 @@
 
-    <div class="container-fluid bg-dark" *ngIf="UserLogged" style="height: 82.5vh;">
-      <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
+<nav class="navbar " style="background-color: #384D6A;">
+  <div class="container-fluid align-items-center">
+    <ul class="nav">
+  <li class="nav-item">
+      <img src="../../../assets/unknown.png"  width="40" height="42" class="d-inline-block rounded-circle align-text-top">
+  </li>
+    <li class="nav-item">
+      <h4 class="pt-2 ps-3 text-light">Helen</h4>
+  </li>
+</ul>
+</div>
+</nav>
+<div class="container-fluid bg-dark" *ngIf="UserLogged" style="height: 82.5vh;">
+<div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
-        <div *ngFor="let mensaje of mensajes" class="msj p-2"
-          [ngClass]="(UserId==mensaje.emisor)? 'enviado':'recibido'"> 
-          {{mensaje.mensaje}}
-          <p class="lead">{{mensaje.fecha}}</p>
-        </div>
+  <div *ngFor="let mensaje of mensajes" class="msj p-2"
+    [ngClass]="(UserId==mensaje.emisor)? 'enviado':'recibido'"> 
+    {{mensaje.mensaje}}
+    <p class="lead">{{mensaje.fecha}}</p>
+  </div>
 
-      </div>
-    </div>
-    <form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
-      <div class="input-group ">
-      <input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
-      [ngModelOptions]="{standalone:true}" aria-label="Recipient's username" aria-describedby="basic-addon2">
-      
-      <div class="input-group-append pt-2">
+</div>
+</div>
+<form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
+<div class="input-group ">
+<input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
+[ngModelOptions]="{standalone:true}" aria-label="Recipient's username" aria-describedby="basic-addon2">
 
-        <button class="btn btn-outline-secondary botones" type="button" (click)="enviarMensaje()">
-          <img src="../../../assets/send.png">
-        </button>
-        <button class="btn btn-outline-secondary botones" type="button">
-          <img src="../../../assets/email.png">
-        </button>
+<div class="input-group-append pt-2">
 
-        </div>
-      </div>
-    
-    
-    </form>
+  <button class="btn btn-outline-secondary botones" type="button" (click)="enviarMensaje()">
+    <img src="../../../assets/send.png">
+  </button>
+  <button class="btn btn-outline-secondary botones" type="button">
+    <img src="../../../assets/email.png">
+  </button>
+
+  </div>
+</div>
+
+
+</form>
 

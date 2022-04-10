@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-main',
@@ -28,9 +29,13 @@ export class MainComponent implements OnInit {
   users:Observable<any[]>;
   changeMenu:boolean = this.loginService.changeMenu;
   public contactos: Contactos[] = [];
+  public ids: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
+  changeChat:boolean = false;
+  
 
-  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase) {
+  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
+  private chat: ChatService) {
 
 this.allUsers = db.list('usuarios');
 	 this.users = this.allUsers.snapshotChanges().pipe( map(changes => {
@@ -51,19 +56,24 @@ this.allUsers = db.list('usuarios');
 
     this.setValores();
     }
-    public CambiarSideBar(){
-      this.loginService.CambiarSideBar();
-      this.changeMenu  = !this.changeMenu;
 
-    }
+
+public CambiarSideBar(){
+  this.loginService.CambiarSideBar();
+  this.changeMenu  = !this.changeMenu;
+
+  }
    
 public AgregarContacto(): any {
 	let arr:any[];
 	arr =this.newContact.split(',')
 	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
 	itemsRef.set(arr[0],{nombre:arr[1], id:arr[0]});
-  this.setValores();
+	const itemsRef2 = this.db.list(`chat/privado`);
+  itemsRef2.set(this.UserId + ' y ' + arr[0],{usuarios:this.UserId + ' y ' + arr[0]});
+  
   location.reload();
+  this.setValores();
   }
 
 
@@ -85,7 +95,8 @@ public AgregarContacto(): any {
       const ref2 = this.storage.ref(`/users/${ids[i]}`);
       this.profileUrlC.push(ref2.getDownloadURL());
     }
-
+  
+    this.ids = ids;
     this.contactos = cont;
 
   }
@@ -120,9 +131,18 @@ public AgregarContacto(): any {
     
   }
 
+  public Chats(posicion:number){
+    this.chat.id = this.ids[posicion];
+    this.changeChat = !this.changeChat;
+    if(this.changeChat == false){
+      
+    setTimeout(()=>
+    {
+      this.changeChat = !this.changeChat;
 
-  public Chats(){
-  
+    }, 100);
+
+  }
   }
   
 }

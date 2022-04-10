@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
 import { v4 as uuidv4 } from 'uuid';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat',
@@ -25,14 +26,17 @@ export class ChatComponent implements OnInit {
   nuevoMensaje: string = "";
   pipe!: any;
   today!: any;
-  
+
   @ViewChild('contenedorMensajes') private contenedor!: ElementRef;
   public mensajes: Mensajes[] = [];
   no!: number;
+  contacto:any;
+  existencia:any;
+  
+  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
+    private chat: ChatService){
 
-  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase) {
-
-
+    this.contacto = chat.id;
     this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
@@ -45,7 +49,9 @@ export class ChatComponent implements OnInit {
     this.profileUrl = ref.getDownloadURL();
     setInterval(()=> { this.setValores() }, 2 * 1000);
     
-
+    this.Existencia();
+    console.log(this.existencia);
+    
     }
     
 
@@ -79,13 +85,26 @@ export class ChatComponent implements OnInit {
     this.no = new Date().getTime();
     this.pipe = new DatePipe('en-US');
     this.today = this.pipe.transform(Date.now(), 'MMM d, y, h:mm:ss a');
-    
-    await this.db.object('chat/privado/' + 'roomID/' + idMsg + ' - ' + this.today).set({
+    if(this.existencia == true){
+
+      await this.db.object(`chat/privado/${this.UserId} y ${this.contacto}/${idMsg} - ${this.today}`).set({
+        'mensaje': this.nuevoMensaje,
+        'emisor': this.UserId,
+        'fecha': this.today,
+        'no': this.no
+      });
+
+    }else{
+      
+    await this.db.object(`chat/privado/${this.contacto} y ${this.UserId}/${idMsg} - ${this.today}`).set({
       'mensaje': this.nuevoMensaje,
       'emisor': this.UserId,
       'fecha': this.today,
       'no': this.no
     });
+  
+  }
+
     
     await this.setValores();
 
@@ -125,13 +144,31 @@ export class ChatComponent implements OnInit {
 
   async obtenerMensajes(){
 
+    if(this.existencia == true){
     return new Promise((resolve, reject)=>{
-      this.db.list('chat/privado/' + 'roomID', ref=>
+      this.db.list(`chat/privado/${this.UserId} y ${this.contacto}`, ref=>
       ref.orderByChild('no').limitToLast(25)).valueChanges().subscribe(
         value => {
           resolve(value);
         });
+      });
+    }else{
+      
+    return new Promise((resolve, reject)=>{
+      this.db.list(`chat/privado/${this.contacto} y ${this.UserId}`, ref=>
+      ref.orderByChild('no').limitToLast(25)).valueChanges().subscribe(
+        value => {
+          resolve(value);
+        });
+      });
+    }
 
+  }
+
+  async Existencia(){
+    
+    this.existencia = this.db.database.ref(`chat/privado/${this.UserId} y ${this.contacto}`).once('value', (snapshot) => {
+     return snapshot.val();
     });
 
   }

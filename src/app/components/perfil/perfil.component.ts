@@ -20,10 +20,16 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
   nameItemRef: AngularFireObject<any>;
   name: Observable<any>;;
   comentarioItemRef: AngularFireObject<any>;
-  comentario: Observable<any>;;
+  comentario: Observable<any>;
+  
+  botonNombre = true;
+  botonComentario = true;
+  nombreInput = '';
+  comentarioInput = '';
+  userRef:AngularFireObject<any> | undefined;
 
 
-  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage,db: AngularFireDatabase) {
+  constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, public db: AngularFireDatabase) {
 
          this.UserId = this.route.snapshot.paramMap.get('uid');
 
@@ -51,7 +57,7 @@ public HidePerfil(){
   this.startReLoadData.emit();
 
     }
-        public obtenerUsuarioLogeado() {
+    public obtenerUsuarioLogeado() {
   	
     this.loginService.getUserLogged().subscribe( res =>{
       console.log(res?.email);
@@ -59,6 +65,27 @@ public HidePerfil(){
       return res?.email;
     });
   }
+
+
+  ocultarBotonNombre(){
+    this.botonNombre = !this.botonNombre;
+  }
+
+  ocultarBotonComentario (){
+    this.botonComentario = !this.botonComentario;
+  }
+
+  actualizarNombre(){
+    this.userRef = this.db.object(`usuarios/${this.UserId}`)
+    this.userRef.update({name: this.nombreInput});
+    this.botonNombre = true;
+  };
+
+  actualizarComentario(){
+    this.userRef = this.db.object(`usuarios/${this.UserId}`)
+    this.userRef.update({comentario: this.comentarioInput});
+    this.botonComentario = true;
+  };
 
   ngOnInit(): void {
     console.log(this.UserId);

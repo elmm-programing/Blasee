@@ -27,7 +27,7 @@
   <div class="col-2">
  <button class="btn p-0" (click)="CambiarSideBar()">
 
-<a  class=" align-items-center   link-dark  ">
+<a  class=" p-2 pb-5 align-items-center link-dark  ">
       <img  [src]="profileUrl | async" class="bi me-2 rounded-circle" width="40" height="42" alt="">
     </a>
 </button> 	
@@ -51,63 +51,29 @@
    </div>
   <div class="container-fluid  " *ngIf="UserLogged" id="please-scroll">
     <div class="row mb-4 mt-3" style="cursor: pointer;" *ngFor="let contacts of contactos; let i=index">
-
-      <div (click)="Chats()" class="card border-dark contactos" style="max-width: 18rem;">
+      <div (click)="Chats(i)" class="card border-dark contactos" style="max-width: 18rem;">
         <div class="card-header p-0 text-dark">
-          <img  [src]="profileUrlC[i] | async" class="bi me-2 rounded-circle" width="40" height="42" alt="">
+          <img [src]="profileUrlC[i] | async" class="bi me-2 rounded-circle" width="40" height="42" alt="">
           {{contacts.nombre}}
         </div>
         <div class="card-body p-2">
           <p class="text-dark card-text">Hola</p>
         </div>
       </div>
-
     </div>
-
-
   	
   </div>
-
     </div>
-
-
-      </div>
-
-      
+      </div>      
      </div>
     </nav>
 
-    <main class="col-xs-9 col-sm-9 col-md-9  col-lg-10  p-0">
-<nav class="navbar " style="background-color: #384D6A;">
-  <div class="container-fluid align-items-center">
-    <ul class="nav">
-  <li class="nav-item">
-      <img src="../../../assets/unknown.png"  width="40" height="42" class="d-inline-block rounded-circle align-text-top">
-  </li>
-    <li class="nav-item">
-      <h4 class="pt-2 ps-3 text-light">Helen</h4>
-  </li>
-</ul>
-  </div>
-</nav>
-
-<app-chat></app-chat>
-<!--
-<div class="container bg-dark" style="height:85vh">
-
-</div>
-<div class="container-fluid" style="background-color: #384D6A;height: 61.5px;">
-	<div class="input-group ">
-  <input type="text" class="form-control pb-3" placeholder="Recipient's username" aria-label="Recipient's username with two button addons">
-  <button class="btn btn-outline-secondary" type="button"><i class="bi bi-send " style="color:white"></i></button>
-  <button class="btn btn-outline-secondary" type="button"><i class="bi bi-link-45deg" style="color:white"></i></button>
-</div>
-
-</div>
--->
+    <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10  p-0">
+    <app-chat *ngIf="changeChat" (startReLoadData)="true"></app-chat>
     </main>
   </div>
 </div>
 
 <!--
+      <app-chat></app-chat>
 <app-perfil></app-perfil>-->
