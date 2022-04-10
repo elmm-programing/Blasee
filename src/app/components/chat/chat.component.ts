@@ -25,9 +25,6 @@ export class ChatComponent implements OnInit {
   comentarioItemRef: AngularFireObject<any>;
   comentario: Observable<any>;
   
-  
-  
-
   nuevoMensaje: string = "";
   pipe!: any;
   today!: any;
@@ -52,9 +49,8 @@ export class ChatComponent implements OnInit {
 
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
-    setInterval(()=> { this.setValores() }, 2 * 1000);
-    
     this.Existencia();
+    setInterval(()=> { this.setValores() }, 2 * 1000);
     
     }
     

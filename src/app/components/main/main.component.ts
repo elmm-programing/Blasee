@@ -1,13 +1,14 @@
-import { Component,OnInit } from '@angular/core';
+import { AfterViewInit, Component,ElementRef,OnInit, ViewChild } from '@angular/core';
 import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireObject,AngularFireList } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { ChatService } from 'src/app/services/chat.service';
+import { loadavg } from 'os';
 
 @Component({
   selector: 'app-main',
@@ -19,7 +20,7 @@ export class MainComponent implements OnInit {
   UserId:string|null|undefined;
   profileUrl: Observable<string | null>   
   nameItemRef: AngularFireObject<any>;
-  name: Observable<any>;
+  name!: Observable<any>;
   comentarioItemRef: AngularFireObject<any>;
   comentario: Observable<any>;
   nuevoMensaje: string = "";
@@ -32,8 +33,8 @@ export class MainComponent implements OnInit {
   public ids: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
   changeChat:boolean = false;
-  existencia:any;
   contactoAgregado:any;
+  nombre!:string;
   
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
@@ -48,7 +49,10 @@ this.allUsers = db.list('usuarios');
     this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
-    this.name = this.nameItemRef.valueChanges();
+    this.nameItemRef.valueChanges().subscribe(value => {
+      this.nombre = value;
+  });
+
     
 	 this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
     this.comentario = this.comentarioItemRef.valueChanges();
@@ -66,39 +70,28 @@ public CambiarSideBar(){
 
   }
    
-public AgregarContacto(): any {
+AgregarContacto(){
 	let arr:any[];
-	arr =this.newContact.split(',')
-	const itemsRef = this.db.list(`usuarios/${this.UserId}/Contactos`);
+	arr =this.newContact.split(',');
   this.contactoAgregado = arr[0];
-  this.Existencia();
-  itemsRef.set(arr[0],{nombre:arr[1], id:arr[0]});
 
-  if(this.existencia == false){
-    const itemsRef2 = this.db.list(`chat/privado`);
-    itemsRef2.set(this.UserId + ' y ' + arr[0],{usuarios:this.UserId + ' y ' + arr[0]});
-  }
-  location.reload();
+  this.db.object(`usuarios/${this.UserId}/Contactos/${arr[0]}`).set({
+    'nombre': arr[1],
+    'id': arr[0]
+  });
+
+  this.db.object(`usuarios/${arr[0]}/Contactos/${this.UserId}`).set({
+    'nombre': this.nombre,
+    'id': this.UserId
+  });
+
+
+  this.db.object(`chat/privado/${this.UserId} y ${this.contactoAgregado}`).set({
+    'usuarios': this.UserId + ' y ' + arr[0]
+  });
+
   this.setValores();
-  }
-
-
-  public Existencia(){
-    
-    this.db.database.ref(`chat/privado/${this.UserId} y ${this.contactoAgregado}`).once('value', (snapshot) => {
-      if(snapshot.exists() == true){
-        this.setExistencia(true);
-      }else{
-        this.setExistencia(false);
-      }
-     });
-
-
-  }
-
-  public setExistencia(existencia:boolean){
-    this.existencia = existencia;
-    console.log(this.existencia);
+  location.reload();
   }
 
   
