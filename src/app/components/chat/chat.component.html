@@ -3,10 +3,10 @@
   <div class="container-fluid align-items-center">
     <ul class="nav">
   <li class="nav-item">
-      <img src="../../../assets/unknown.png"  width="40" height="42" class="d-inline-block rounded-circle align-text-top">
+      <img [src]="profileUrl | async" width="40" height="42" class="d-inline-block rounded-circle align-text-top">
   </li>
     <li class="nav-item">
-      <h4 class="pt-2 ps-3 text-light">Helen</h4>
+      <h4 class="pt-2 ps-3 text-light">{{this.nombreContacto}}</h4>
   </li>
 </ul>
 </div>

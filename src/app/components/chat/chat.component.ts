@@ -19,11 +19,9 @@ import { ChatService } from 'src/app/services/chat.service';
 export class ChatComponent implements OnInit {
   UserLogged = this.loginService.getUserLogged(); 
   UserId:string|null|undefined;
-  profileUrl: Observable<string | null>   
   nameItemRef: AngularFireObject<any>;
   name: Observable<any>;
-  comentarioItemRef: AngularFireObject<any>;
-  comentario: Observable<any>;
+  profileUrl: Observable<string | null>   
   
   nuevoMensaje: string = "";
   pipe!: any;
@@ -33,37 +31,28 @@ export class ChatComponent implements OnInit {
   public mensajes: Mensajes[] = [];
   no!: number;
   contacto:any;
+  public nombreContacto: any;
   existencia:any;
   
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
     private chat: ChatService){
 
-    this.contacto = chat.id;
+    this.contacto = chat.idContacto;
+    this.nombreContacto = chat.nombreContacto;
+    this.profileUrl = chat.imgContacto;
+
     this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
     this.name = this.nameItemRef.valueChanges();
-    
-	 this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
-    this.comentario = this.comentarioItemRef.valueChanges();
 
-    const ref = this.storage.ref(`/users/${this.UserId}`);
+    const ref = this.storage.ref(`/users/${this.contacto}`);
     this.profileUrl = ref.getDownloadURL();
+
     this.Existencia();
     setInterval(()=> { this.setValores() }, 2 * 1000);
     
     }
-    
-
-    public obtenerUsuarioLogeado() {
-        
-        this.loginService.getUserLogged().subscribe( res =>{
-          console.log(res?.email);
-          console.log(this.UserId);
-          return res?.email;
-        });
-      }
-
 
   ngOnInit(): void {
     this.setValores();

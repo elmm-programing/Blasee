@@ -5,7 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class ChatService {
 
-  public id:any;
+  public idContacto:any;
+  public nombreContacto:any;
+  public imgContacto:any;
 
   constructor() { }
 }

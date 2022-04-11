@@ -21,8 +21,6 @@ export class MainComponent implements OnInit {
   profileUrl: Observable<string | null>   
   nameItemRef: AngularFireObject<any>;
   name!: Observable<any>;
-  comentarioItemRef: AngularFireObject<any>;
-  comentario: Observable<any>;
   nuevoMensaje: string = "";
 
   newContact!:any; 
@@ -31,6 +29,7 @@ export class MainComponent implements OnInit {
   changeMenu:boolean = this.loginService.changeMenu;
   public contactos: Contactos[] = [];
   public ids: any[] = [];
+  public nombreContacto: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
   changeChat:boolean = false;
   contactoAgregado:any;
@@ -52,10 +51,6 @@ this.allUsers = db.list('usuarios');
     this.nameItemRef.valueChanges().subscribe(value => {
       this.nombre = value;
   });
-
-    
-	 this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
-    this.comentario = this.comentarioItemRef.valueChanges();
 
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
@@ -105,6 +100,9 @@ AgregarContacto(){
       ids = cont.map(element =>{
         return element.id;
       });
+      this.nombreContacto = cont.map(element =>{
+        return element.nombre;
+      });
     });
 
     for(let i=0;i<ids.length;i++){
@@ -129,14 +127,6 @@ AgregarContacto(){
     });
 
   }
-    public obtenerUsuarioLogeado() {
-        
-        this.loginService.getUserLogged().subscribe( res =>{
-          console.log(res?.email);
-          console.log(this.UserId);
-          return res?.email;
-        });
-      }
     
       public logout(): any {
         this.loginService.logout();
@@ -149,7 +139,10 @@ AgregarContacto(){
   }
 
   public Chats(posicion:number){
-    this.chat.id = this.ids[posicion];
+    this.chat.idContacto = this.ids[posicion];
+    this.chat.nombreContacto = this.nombreContacto[posicion];
+    this.chat.imgContacto = this.profileUrlC[posicion];
+
     this.changeChat = !this.changeChat;
     if(this.changeChat == false){
       
