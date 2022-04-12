@@ -33,6 +33,7 @@ export class ChatComponent implements OnInit {
   contacto:any;
   public nombreContacto: any;
   existencia:any;
+  data:any;
   
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
     private chat: ChatService){
@@ -49,14 +50,12 @@ export class ChatComponent implements OnInit {
     const ref = this.storage.ref(`/users/${this.contacto}`);
     this.profileUrl = ref.getDownloadURL();
 
-    this.Existencia();
-    setInterval(()=> { this.setValores() }, 2 * 1000);
+    setTimeout(()=> { this.obtenerMensajes(); }, 200);
     
     }
 
-  ngOnInit(): void {
-    this.setValores();
-    console.log();
+  ngOnInit(){
+    this.Existencia();
   }
   
   ngAfterViewInit(): void {
@@ -95,7 +94,7 @@ export class ChatComponent implements OnInit {
   
   }
 
-    await this.setValores();
+    await this.obtenerMensajes();
 
     this.nuevoMensaje = "";
     setTimeout(()=>
@@ -105,50 +104,56 @@ export class ChatComponent implements OnInit {
 
   }
 
-  async setValores(){
-
-    var msjdb!: Mensajes[];
-    
-    await this.obtenerMensajes().then(value => {
-      msjdb = value as Mensajes[];
-    });
-
-    if(msjdb.length != this.mensajes.length){
-
-      this.mensajes = msjdb;
-      setTimeout(()=>
-      {
-      this.scrollUltimo();
-      }, 30);
-
-    }else{
-      
-      this.mensajes = msjdb;  
-      
-    }
-      
-    
-
-  }
 
   async obtenerMensajes(){
+
+    var msjdb!: Mensajes[];
+
     if(this.existencia == true){
-    return new Promise((resolve, reject)=>{
       this.db.list(`chat/privado/${this.UserId} y ${this.contacto}/Mensajes`, ref=>
-      ref.orderByChild('no').limitToLast(25)).valueChanges().subscribe(
-        value => {
-          resolve(value);
+      ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
+        value => { 
+          msjdb = value as Mensajes[];
+      
+          if(msjdb.length != this.mensajes.length){
+      
+            this.mensajes = msjdb;
+            setTimeout(()=>
+            {
+            this.scrollUltimo();
+            }, 30);
+      
+          }else{
+            
+            this.mensajes = msjdb;  
+            
+          }
+            
+          this.data = true;
         });
-      });
     }else{
       
-    return new Promise((resolve, reject)=>{
       this.db.list(`chat/privado/${this.contacto} y ${this.UserId}/Mensajes`, ref=>
-      ref.orderByChild('no').limitToLast(25)).valueChanges().subscribe(
+      ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
         value => {
-          resolve(value);
+          msjdb = value as Mensajes[];
+      
+          if(msjdb.length != this.mensajes.length){
+      
+            this.mensajes = msjdb;
+            setTimeout(()=>
+            {
+            this.scrollUltimo();
+            }, 30);
+      
+          }else{
+            
+            this.mensajes = msjdb;  
+            
+          }
+            
+          this.data = true;
         });
-      });
     }
 
   }
