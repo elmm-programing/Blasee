@@ -60,7 +60,7 @@ export class ChatComponent implements OnInit {
     setTimeout(()=> { 
       this.refM = chat.reff;
       this.obtenerMensajes(); 
-    }, 200);
+    }, 300);
     
     }
 

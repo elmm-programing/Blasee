@@ -147,7 +147,7 @@ AgregarContacto(){
     {
       this.changeChat = !this.changeChat;
 
-    }, 200);
+    }, 300);
 
   }
   }
