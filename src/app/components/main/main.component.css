@@ -17,6 +17,9 @@
   height: calc(100vh - 110px);
   overflow-y: scroll;
 }
+#please-scroll::-webkit-scrollbar{
+    display: none;
+}
 
 .banner{
   background-color: #FC5185;

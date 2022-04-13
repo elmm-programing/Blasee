@@ -57,7 +57,7 @@
           {{contacts.nombre}}
         </div>
         <div class="card-body p-2">
-          <p class="text-dark card-text">Hola</p>
+          <p class="text-dark card-text" *ngIf="this.comentario">{{this.comentario[i]}}</p>
         </div>
       </div>
     </div>

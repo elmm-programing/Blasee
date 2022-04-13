@@ -8,19 +8,27 @@
     <li class="nav-item">
       <h4 class="pt-2 ps-3 text-light">{{this.nombreContacto}}</h4>
   </li>
+  <li class="nav-item">
+    <img width="30" height="30" style="float: right;" [ngClass]="this.visto==false?'unseen':'seen'">
+</li>
 </ul>
 </div>
 </nav>
-<div class="container-fluid bg-dark" *ngIf="UserLogged" style="height: 82.5vh;">
+<div class="container-fluid bg-dark" *ngIf="UserLogged" [ngClass]="this.temp? 'respuesta':'normal'">
 <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
-  <div *ngFor="let mensaje of mensajes" class="msj p-2"
-    [ngClass]="(UserId==mensaje.emisor)? 'enviado':'recibido'"> 
-    {{mensaje.mensaje}}
-    <p class="lead">{{mensaje.fecha}}</p>
+  <div *ngFor="let mensaje of mensajes; let i=index" 
+  class="msj p-2" [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje, i)">
+      <div *ngIf="mensaje.mensajeResp" class="card-header bg-dark text-white text-truncate">
+        <a>{{mensaje.mensajeResp}}</a>
+      </div>
+        <a>{{mensaje.mensaje}}</a>
+        <p class="lead">{{mensaje.fecha}}</p>  
   </div>
-
 </div>
+</div> 
+<div *ngIf="this.temp" (click)="Cancelar()" style="cursor: pointer;" class="card-header h-3 text-truncate">
+  <a>{{this.temp}}</a>
 </div>
 <form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
 <div class="input-group ">

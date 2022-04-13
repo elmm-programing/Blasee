@@ -8,7 +8,7 @@ import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
-import { ChatService } from 'src/app/services/chat.service';
+import { ChatService } from 'src/app/services/chat.service';import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-chat',
@@ -29,11 +29,17 @@ export class ChatComponent implements OnInit {
 
   @ViewChild('contenedorMensajes') private contenedor!: ElementRef;
   public mensajes: Mensajes[] = [];
+  respuesta:any[] = [];
   no!: number;
   contacto:any;
   public nombreContacto: any;
-  existencia:any;
   data:any;
+  temp:any;
+  posicion:any;
+  refM:any;
+  visto:any;
+  vistoArr:any;
+  emisor!:any[];
   
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
     private chat: ChatService){
@@ -41,7 +47,6 @@ export class ChatComponent implements OnInit {
     this.contacto = chat.idContacto;
     this.nombreContacto = chat.nombreContacto;
     this.profileUrl = chat.imgContacto;
-
     this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
@@ -50,12 +55,17 @@ export class ChatComponent implements OnInit {
     const ref = this.storage.ref(`/users/${this.contacto}`);
     this.profileUrl = ref.getDownloadURL();
 
-    setTimeout(()=> { this.obtenerMensajes(); }, 200);
+    console.log(this.contacto);
+
+    setTimeout(()=> { 
+      this.refM = chat.reff;
+      this.obtenerMensajes(); 
+    }, 200);
     
     }
 
   ngOnInit(){
-    this.Existencia();
+    this.chat.Referencia();
   }
   
   ngAfterViewInit(): void {
@@ -73,27 +83,27 @@ export class ChatComponent implements OnInit {
     this.no = new Date().getTime();
     this.pipe = new DatePipe('en-US');
     this.today = this.pipe.transform(Date.now(), 'MMM d, y, h:mm:ss a');
-
-    if(this.existencia == true){
-
-      await this.db.object(`chat/privado/${this.UserId} y ${this.contacto}/Mensajes/${idMsg} - ${this.today}`).set({
-        'mensaje': this.nuevoMensaje,
-        'emisor': this.UserId,
-        'fecha': this.today,
-        'no': this.no
-      });
-
-    }else{
-      
-    await this.db.object(`chat/privado/${this.contacto} y ${this.UserId}/Mensajes/${idMsg} - ${this.today}`).set({
+  
+  if(this.temp!){
+    await this.db.object(`chat/privado/${this.refM}/Mensajes/${idMsg} - ${this.today}`).set({
       'mensaje': this.nuevoMensaje,
+      'mensajeResp': this.temp,
       'emisor': this.UserId,
       'fecha': this.today,
-      'no': this.no
+      'no': this.no,
+      'visto': false
     });
-  
-  }
+    this.temp = "";
 
+  }else{
+  await this.db.object(`chat/privado/${this.refM}/Mensajes/${idMsg} - ${this.today}`).set({
+    'mensaje': this.nuevoMensaje,
+    'emisor': this.UserId,
+    'fecha': this.today,
+    'no': this.no,
+    'visto': false
+     });
+  }
     await this.obtenerMensajes();
 
     this.nuevoMensaje = "";
@@ -104,77 +114,80 @@ export class ChatComponent implements OnInit {
 
   }
 
+  TipoMensaje(emisor:string){
+    if (this.UserId==emisor){
+        return "enviado"
+        }
+    else{
+        return "recibido"
+    }
+  }
+
+  ResponderMensaje(mensaje:string, posicion:number){
+    this.temp = mensaje;
+  }
+  
+  Cancelar(){
+    this.temp = "";
+  }
 
   async obtenerMensajes(){
 
     var msjdb!: Mensajes[];
 
-    if(this.existencia == true){
-      this.db.list(`chat/privado/${this.UserId} y ${this.contacto}/Mensajes`, ref=>
-      ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
-        value => { 
-          msjdb = value as Mensajes[];
-      
-          if(msjdb.length != this.mensajes.length){
-      
-            this.mensajes = msjdb;
-            setTimeout(()=>
-            {
-            this.scrollUltimo();
-            }, 30);
-      
-          }else{
-            
-            this.mensajes = msjdb;  
-            
-          }
-            
-          this.data = true;
+    this.db.list(`chat/privado/${this.refM}/Mensajes`, ref=>
+    ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
+      value => { 
+        msjdb = value as Mensajes[];
+        this.emisor = msjdb.map(element =>{
+          return element.emisor;
         });
-    }else{
-      
-      this.db.list(`chat/privado/${this.contacto} y ${this.UserId}/Mensajes`, ref=>
-      ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
-        value => {
-          msjdb = value as Mensajes[];
-      
-          if(msjdb.length != this.mensajes.length){
-      
-            this.mensajes = msjdb;
-            setTimeout(()=>
-            {
-            this.scrollUltimo();
-            }, 30);
-      
-          }else{
-            
-            this.mensajes = msjdb;  
-            
-          }
-            
-          this.data = true;
+        this.vistoArr = msjdb.map(element =>{
+          return element.visto;
         });
-    }
+        
+        if(this.emisor.length > 0){
+          if(this.emisor[this.emisor.length - 1] != this.UserId){
+            let dbCon = this.db.database.ref(`chat/privado/${this.refM}/Mensajes/`);
+            dbCon.once("value", function(snapshot) {
+              snapshot.forEach(function(child) {
+                child.ref.update({
+                  visto: true
+                });
+              });
+            }).then(()=>{
+              this.visto = true;
+            });
 
-  }
+          }else if(this.vistoArr[this.vistoArr.length - 1] == true){
+            this.visto = true;
+          }else{
+            this.visto = false;
+          }
+       }else{
+         this.visto = false;
+       }
 
-  public Existencia(){
+        if(msjdb.length != this.mensajes.length){
     
-    this.db.database.ref(`chat/privado/${this.UserId} y ${this.contacto}`).once('value', (snapshot) => {
-      if(snapshot.exists() == true){
-        this.setExistencia(true);
-      }else{
-        this.setExistencia(false);
-      }
-     });
+          this.mensajes = msjdb;
+          setTimeout(()=>
+          {
+          this.scrollUltimo();
+          }, 30);
+    
+        }else{
+          
+          this.mensajes = msjdb;  
+          
+        }
+          
+        this.data = true;
 
+      });
 
   }
 
-  public setExistencia(existencia:boolean){
-    this.existencia = existencia;
-    console.log(this.existencia);
-  }
 
   async scrollUltimo(){
 
@@ -193,8 +206,10 @@ export class ChatComponent implements OnInit {
 
 class Mensajes {
   mensaje!: string;
+  mensajeResp!: string;
   emisor!: string;
   fecha!: string;
   no!: number;
+  visto!: boolean;
   
 }

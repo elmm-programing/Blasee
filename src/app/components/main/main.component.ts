@@ -30,6 +30,7 @@ export class MainComponent implements OnInit {
   public contactos: Contactos[] = [];
   public ids: any[] = [];
   public nombreContacto: any[] = [];
+  public comentario: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
   changeChat:boolean = false;
   contactoAgregado:any;
@@ -55,7 +56,7 @@ this.allUsers = db.list('usuarios');
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
 
-    this.setValores();
+    this.ObtenerContactos();
     }
 
 
@@ -85,46 +86,40 @@ AgregarContacto(){
     'usuarios': this.UserId + ' y ' + arr[0]
   });
 
-  this.setValores();
-  location.reload();
-  }
-
-  
-  async setValores(){
-    
-    var cont!: Contactos[];
-    var ids!:any[];
-    
-    await this.ObtenerContactos().then(value => {
-      cont = value as Contactos[];
-      ids = cont.map(element =>{
-        return element.id;
-      });
-      this.nombreContacto = cont.map(element =>{
-        return element.nombre;
-      });
-    });
-
-    for(let i=0;i<ids.length;i++){
-
-      const ref2 = this.storage.ref(`/users/${ids[i]}`);
-      this.profileUrlC.push(ref2.getDownloadURL());
-    }
-  
-    this.ids = ids;
-    this.contactos = cont;
-
+  this.ObtenerContactos();
   }
 
   async ObtenerContactos(){
 
-    return new Promise((resolve, reject)=>{
-      this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges().subscribe(
-        value => {
-          resolve(value);
+    var cont!: Contactos[];
+    var ids!:any[];
+    this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges(['child_added']).subscribe(
+      value => {
+
+        this.profileUrlC = [];
+        cont = value as Contactos[];
+        ids = cont.map(element =>{
+          return element.id;
+        });
+        this.nombreContacto = cont.map(element =>{
+          return element.nombre;
         });
 
-    });
+
+        for(let i=0;i<ids.length;i++){
+          const ref2 = this.storage.ref(`/users/${ids[i]}`);
+          this.profileUrlC.push(ref2.getDownloadURL());
+          this.db.object(`usuarios/${ids[i]}/comentario`).valueChanges().subscribe(value => {
+            this.comentario.push(value);
+          });
+        }
+        
+      
+        this.ids = ids;
+        this.contactos = cont;
+
+      });
+
 
   }
     
@@ -142,6 +137,8 @@ AgregarContacto(){
     this.chat.idContacto = this.ids[posicion];
     this.chat.nombreContacto = this.nombreContacto[posicion];
     this.chat.imgContacto = this.profileUrlC[posicion];
+    this.chat.UserId = this.UserId;
+    
 
     this.changeChat = !this.changeChat;
     if(this.changeChat == false){
@@ -150,7 +147,7 @@ AgregarContacto(){
     {
       this.changeChat = !this.changeChat;
 
-    }, 100);
+    }, 200);
 
   }
   }
