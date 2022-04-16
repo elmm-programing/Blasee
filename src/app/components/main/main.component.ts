@@ -20,6 +20,7 @@ export class MainComponent implements OnInit {
   UserId:string|null|undefined;
   profileUrl: Observable<string | null>   
   nameItemRef: AngularFireObject<any>;
+  comentarioItemRef: AngularFireObject<any>;
   name!: Observable<any>;
   nuevoMensaje: string = "";
 
@@ -35,6 +36,7 @@ export class MainComponent implements OnInit {
   changeChat:boolean = false;
   contactoAgregado:any;
   nombre!:string;
+  comentarioU!:string;
   
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
@@ -52,6 +54,11 @@ this.allUsers = db.list('usuarios');
     this.nameItemRef.valueChanges().subscribe(value => {
       this.nombre = value;
   });
+
+  this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
+   this.comentarioItemRef.valueChanges().subscribe(value => {
+     this.comentarioU = value;
+ });
 
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
@@ -73,12 +80,14 @@ AgregarContacto(){
 
   this.db.object(`usuarios/${this.UserId}/Contactos/${arr[0]}`).set({
     'nombre': arr[1],
-    'id': arr[0]
+    'id': arr[0],
+    'comentario': arr[2]
   });
 
   this.db.object(`usuarios/${arr[0]}/Contactos/${this.UserId}`).set({
     'nombre': this.nombre,
-    'id': this.UserId
+    'id': this.UserId,
+    'comentario': this.comentarioU
   });
 
 
@@ -104,14 +113,14 @@ AgregarContacto(){
         this.nombreContacto = cont.map(element =>{
           return element.nombre;
         });
+        this.comentario = cont.map(element =>{
+          return element.comentario;
+        });
 
 
         for(let i=0;i<ids.length;i++){
           const ref2 = this.storage.ref(`/users/${ids[i]}`);
           this.profileUrlC.push(ref2.getDownloadURL());
-          this.db.object(`usuarios/${ids[i]}/comentario`).valueChanges().subscribe(value => {
-            this.comentario.push(value);
-          });
         }
         
       
@@ -147,7 +156,7 @@ AgregarContacto(){
     {
       this.changeChat = !this.changeChat;
 
-    }, 300);
+    }, 100);
 
   }
   }
@@ -156,12 +165,14 @@ AgregarContacto(){
 
 
 class Contactos {
-  constructor(nombre: string, id: string) {
+  constructor(nombre: string, id: string, comentario: string) {
     this.nombre = nombre;
     this.id = id;
+    this.comentario = comentario;
   }
 
   public nombre!: string;
   public id!: string;
+  public comentario!: string;
   
 }

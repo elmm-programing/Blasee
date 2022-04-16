@@ -37,7 +37,6 @@ export class ChatComponent implements OnInit {
   temp:any;
   posicion:any;
   refM:any;
-  visto:any;
   vistoArr:any;
   emisor!:any[];
   
@@ -60,7 +59,7 @@ export class ChatComponent implements OnInit {
     setTimeout(()=> { 
       this.refM = chat.reff;
       this.obtenerMensajes(); 
-    }, 300);
+    }, 500);
     
     }
 
@@ -104,6 +103,7 @@ export class ChatComponent implements OnInit {
     'visto': false
      });
   }
+    this.vistoArr.push(false);
     await this.obtenerMensajes();
 
     this.nuevoMensaje = "";
@@ -138,14 +138,20 @@ export class ChatComponent implements OnInit {
     this.db.list(`chat/privado/${this.refM}/Mensajes`, ref=>
     ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
       value => { 
+        console.log("triggering");
         msjdb = value as Mensajes[];
         this.emisor = msjdb.map(element =>{
           return element.emisor;
         });
+
+        
         this.vistoArr = msjdb.map(element =>{
           return element.visto;
         });
         
+        console.log(this.emisor);
+        console.log(this.vistoArr);
+      
         if(this.emisor.length > 0){
           if(this.emisor[this.emisor.length - 1] != this.UserId){
             let dbCon = this.db.database.ref(`chat/privado/${this.refM}/Mensajes/`);
@@ -155,17 +161,11 @@ export class ChatComponent implements OnInit {
                   visto: true
                 });
               });
-            }).then(()=>{
-              this.visto = true;
             });
-
-          }else if(this.vistoArr[this.vistoArr.length - 1] == true){
-            this.visto = true;
-          }else{
-            this.visto = false;
+            this.vistoArr.push(true);
           }
        }else{
-         this.visto = false;
+        this.vistoArr.push(false);
        }
 
         if(msjdb.length != this.mensajes.length){
@@ -182,9 +182,10 @@ export class ChatComponent implements OnInit {
           
         }
           
-        this.data = true;
 
       });
+
+      this.data = true;
 
   }
 

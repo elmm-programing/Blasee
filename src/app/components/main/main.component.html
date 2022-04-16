@@ -42,7 +42,7 @@
   </div>
     <div class="input-group">
       <select class="form-select mb-10" [(ngModel)]="newContact"  aria-label="Default select example">
-        <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name]]" >{{ user.name  }}</option>
+        <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name], [user.comentario]]" >{{ user.name  }}</option>
   </select>
   <div class="input-group-append">
     <button class="btn botones"  (click)="AgregarContacto()" type="button">

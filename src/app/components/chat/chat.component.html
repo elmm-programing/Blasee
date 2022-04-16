@@ -1,4 +1,3 @@
-<div *ngIf="data" >
 <nav class="navbar " style="background-color: #384D6A;">
   <div class="container-fluid align-items-center">
     <ul class="nav">
@@ -9,15 +8,15 @@
       <h4 class="pt-2 ps-3 text-light">{{this.nombreContacto}}</h4>
   </li>
   <li class="nav-item">
-    <img width="30" height="30" style="float: right;" [ngClass]="this.visto==false?'unseen':'seen'">
+    <img width="30" height="30" style="float: right;" [ngClass]="this.vistoArr[this.vistoArr.length - 1]==false?'unseen':'seen'">
 </li>
 </ul>
 </div>
 </nav>
-<div class="container-fluid bg-dark" *ngIf="UserLogged" [ngClass]="this.temp? 'respuesta':'normal'">
+<div class="container-fluid bg-dark" *ngIf="data" [ngClass]="this.temp? 'respuesta':'normal'">
 <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
-  <div *ngFor="let mensaje of mensajes; let i=index" 
+  <div  *ngFor="let mensaje of mensajes; let i=index" 
   class="msj p-2" [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje, i)">
       <div *ngIf="mensaje.mensajeResp" class="card-header bg-dark text-white text-truncate">
         <a>{{mensaje.mensajeResp}}</a>
@@ -49,5 +48,3 @@
 
 
 </form>
-
-</div>
