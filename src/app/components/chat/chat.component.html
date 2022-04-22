@@ -21,7 +21,7 @@
   [attr.aria-valuenow]="(this.porcentaje | async)"
   aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<div class="container-fluid bg-dark" *ngIf="data" style="height:80%" [ngClass]="this.temp? 'respuesta':'normal'">
+<div class="container-fluid bg-dark" *ngIf="data" style="height:75%" [ngClass]="this.temp? 'respuesta':'normal'">
 <div  id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes ">
 
   <div *ngFor="let mensaje of mensajes; let i=index" 
@@ -50,10 +50,11 @@
 </div>
 </div> 
 
-<div *ngIf="this.temp" (click)="Cancelar()" style="z-index: 1; cursor: pointer;" class="card-header h-3 text-truncate">
+<div *ngIf="this.temp" (click)="Cancelar()"  style="height: 5%; cursor: pointer;" class="card-header h-6 text-truncate">
   <a>{{this.temp}}</a>
 </div>
-<form class="container-fluid bg-opacity-75 bg-dark" style="height: 10%;" (ngSubmit)="enviarMensaje()">
+<div *ngIf="!this.temp" class="bg-dark" style="height:5%;background-color: transparent;"></div>
+<form class="container  bg-opacity-75 align-item-end bg-dark" style="height: 10%;" (ngSubmit)="enviarMensaje()">
 <div class="input-group ">
   <input id="multimedia" style="display: none;" (change)="EnviarArchivo($event)" type="file">
 <input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
