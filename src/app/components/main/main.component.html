@@ -1,36 +1,14 @@
-<!--
-      <app-chat></app-chat>
-<app-perfil></app-perfil>-->
 
+<div class="container-fluid " style="height: 100vh;">
+  <div class="row h-100 ">
 
-
-<!--
-
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#" *ngIf="UserLogged|async as user" >
-      <img  [src]="profileUrl | async"   width="40" height="44" class="d-inline-block align-text-top">
-      {{user.email}}
-    </a>
-    <form class="d-flex" *ngIf="UserLogged|async as user">
-
-      <button class="btn btn-outline-success" type="submit"(loadstart)="UserId = user.uid" (click)="obtenerUsuarioLogeado()">Usuario logeado</button>
-      <button class="btn btn-outline-success" type="submit" (click)="logout()">Logout</button>
-    </form>
-    
-  </div>
-</nav>
--->
-<div class="container-fluid pr-5">
-  <div class="row">
-
-    <nav id="sidebarMenu"  class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh;">
+    <nav id="sidebarMenu"  class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; ">
 
 
 <app-perfil *ngIf="!changeMenu" (startReLoadData)="CambiarSideBar()"  ></app-perfil>
       <div *ngIf="changeMenu" class="p-0">
       	<div class=" container position-sticky p-0">
-<div class="banner row pt-3 justify-content-between" style="margin-right: 0.1px">
+<div class="banner row  justify-content-between" style="margin-right: 0.1px">
   <div class="col-2">
  <button class="btn p-0" (click)="CambiarSideBar()">
 
@@ -63,20 +41,19 @@
   <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Buscar usuario" (click)="searchContainer = true" aria-label="Example text with button addon" aria-describedby="button-addon1">
 </div>
   <div class="container-fluid  "  *ngIf="UserLogged" id="please-scroll">
-
     <div class="p-0" *ngIf="searchContainer" >
       <h5>Contactos globales</h5>
- <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filterSearchUsers">
+ <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filterSearchUsers; let i=index">
       <div (click)="AgregarContacto(user.key,user.name,user.comentario)" class="card border-dark contactos" style="max-width: 18rem;">
         <div class="card-header p-0 text-dark"   >
+          <img [src]="user.photo|async " class="bi me-2 rounded-circle" width="40" height="42" alt="">
           {{user.name}}
         </div>
         <div class="card-body p-2">
-
+          <p class="text-dark card-text" *ngIf="this.comentario">{{user.comentario}}</p>
         </div>
       </div>
     </div>
-
     </div>
     <div class="p-0" *ngIf="!searchContainer">
  <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let contacts of contactos; let i=index">
@@ -98,7 +75,7 @@
       </div>      
      </div>
     </nav>
-    <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10  p-0">
+    <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10  p-0 h-100 ">
     <app-chat *ngIf="changeChat" (startReLoadData)="true"></app-chat>
     </main>
   </div>

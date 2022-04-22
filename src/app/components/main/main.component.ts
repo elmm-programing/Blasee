@@ -31,6 +31,7 @@ export class MainComponent implements OnInit {
   public nombreContacto: any[] = [];
   public comentario: any[] = [];
   profileUrlC: Observable<string | null>[] = [];
+  FilterusersPhotos: Observable<string | null>[] = [];
   changeChat:boolean = false;
   contactoAgregado:any;
   nombre!:string;
@@ -131,12 +132,15 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
 	}else{
 	  /*verificar el array de usuarios que te llega con el que ya tiene*/
-	  if (this.FilterUsers) {
 	  	
-	  }
+          let ref2 = this.storage.ref(`/users/${Users.key}`);
+	  this.FilterusersPhotos.push(ref2.getDownloadURL());
+	  Users.photo = ref2.getDownloadURL();
   this.FilterUsers.push(Users); 	
 
 	}})	
+	console.log(this.FilterusersPhotos);
+	console.log(this.FilterUsers);
     
   this.filterSearchUsers = this.FilterUsers;
     },1000);

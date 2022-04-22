@@ -1,4 +1,6 @@
-<nav class="navbar " style="background-color: #384D6A;">
+
+<div class="container-fluid p-0 " style="height: 100vh;">
+<nav class="navbar  " style="height:10%;background-color: #384D6A;">
   <div class="container-fluid align-items-center">
     <ul class="nav">
   <li class="nav-item">
@@ -19,11 +21,11 @@
   [attr.aria-valuenow]="(this.porcentaje | async)"
   aria-valuemin="0" aria-valuemax="100"></div>
 </div>
-<div class="container-fluid bg-dark" *ngIf="data" [ngClass]="this.temp? 'respuesta':'normal'">
-<div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
+<div class="container-fluid bg-dark" *ngIf="data" style="height:80%" [ngClass]="this.temp? 'respuesta':'normal'">
+<div  id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes ">
 
   <div *ngFor="let mensaje of mensajes; let i=index" 
-  class="msj p-2" [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje)">
+  class="msj p-2 " [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje)">
      
     <div *ngIf="mensaje.mensajeResp" class="card-header bg-dark text-white text-truncate">
         <a>{{mensaje.mensajeResp}}</a>
@@ -51,7 +53,7 @@
 <div *ngIf="this.temp" (click)="Cancelar()" style="z-index: 1; cursor: pointer;" class="card-header h-3 text-truncate">
   <a>{{this.temp}}</a>
 </div>
-<form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
+<form class="container-fluid bg-opacity-75 bg-dark" style="height: 10%;" (ngSubmit)="enviarMensaje()">
 <div class="input-group ">
   <input id="multimedia" style="display: none;" (change)="EnviarArchivo($event)" type="file">
 <input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
@@ -71,3 +73,4 @@
 
 
 </form>
+</div>
