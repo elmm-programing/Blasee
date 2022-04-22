@@ -1,4 +1,10 @@
 <!--
+      <app-chat></app-chat>
+<app-perfil></app-perfil>-->
+
+
+
+<!--
 
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
@@ -15,15 +21,16 @@
   </div>
 </nav>
 -->
-<div class="container-fluid">
+<div class="container-fluid pr-5">
   <div class="row">
 
-    <nav id="sidebarMenu"  class="col-xs-3   col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh;">
+    <nav id="sidebarMenu"  class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; height: 100vh;">
+
 
 <app-perfil *ngIf="!changeMenu" (startReLoadData)="CambiarSideBar()"  ></app-perfil>
       <div *ngIf="changeMenu" class="p-0">
       	<div class=" container position-sticky p-0">
-<div class="banner row pt-3 justify-content-between ">
+<div class="banner row pt-3 justify-content-between" style="margin-right: 0.1px">
   <div class="col-2">
  <button class="btn p-0" (click)="CambiarSideBar()">
 
@@ -40,17 +47,39 @@
 
 </div>
   </div>
+
     <div class="input-group">
-      <select class="form-select mb-10" [(ngModel)]="newContact"  aria-label="Default select example">
-        <option *ngFor="let user of users|async"  [value]="[[user.key],[user.name], [user.comentario]]" >{{ user.name  }}</option>
-  </select>
-  <div class="input-group-append">
-    <button class="btn botones"  (click)="AgregarContacto()" type="button">
-      <img src="../../../assets/add-friend.png">
-    </button>
-   </div>
-  <div class="container-fluid  " *ngIf="UserLogged" id="please-scroll">
-    <div class="row mb-4 mt-3" style="cursor: pointer;" *ngFor="let contacts of contactos; let i=index">
+    
+
+<div class="input-group mb-3">
+  <button class="btn btn-light" (click)="searchContainer = false" type="button" id="button-addon1">
+<svg xmlns="http://www.w3.org/2000/svg" *ngIf="!searchContainer" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+</svg>
+<svg xmlns="http://www.w3.org/2000/svg" *ngIf="searchContainer"  width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd"  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+</svg>
+  </button>
+  <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Buscar usuario" (click)="searchContainer = true" aria-label="Example text with button addon" aria-describedby="button-addon1">
+</div>
+  <div class="container-fluid  "  *ngIf="UserLogged" id="please-scroll">
+
+    <div class="p-0" *ngIf="searchContainer" >
+      <h5>Contactos globales</h5>
+ <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filterSearchUsers">
+      <div (click)="AgregarContacto(user.key,user.name,user.comentario)" class="card border-dark contactos" style="max-width: 18rem;">
+        <div class="card-header p-0 text-dark"   >
+          {{user.name}}
+        </div>
+        <div class="card-body p-2">
+
+        </div>
+      </div>
+    </div>
+
+    </div>
+    <div class="p-0" *ngIf="!searchContainer">
+ <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let contacts of contactos; let i=index">
       <div (click)="Chats(i)" class="card border-dark contactos" style="max-width: 18rem;">
         <div class="card-header p-0 text-dark">
           <img [src]="profileUrlC[i] | async" class="bi me-2 rounded-circle" width="40" height="42" alt="">
@@ -61,19 +90,16 @@
         </div>
       </div>
     </div>
-  	
+     		
+    </div>
+    
   </div>
     </div>
       </div>      
      </div>
     </nav>
-
     <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10  p-0">
     <app-chat *ngIf="changeChat" (startReLoadData)="true"></app-chat>
     </main>
   </div>
 </div>
-
-<!--
-      <app-chat></app-chat>
-<app-perfil></app-perfil>-->

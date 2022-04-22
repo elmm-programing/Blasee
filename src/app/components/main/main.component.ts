@@ -23,10 +23,8 @@ export class MainComponent implements OnInit {
   comentarioItemRef: AngularFireObject<any>;
   name!: Observable<any>;
   nuevoMensaje: string = "";
-
-  newContact!:any; 
-  allUsers:AngularFireList<any>;
-  users:Observable<any[]>;
+   
+  searchContainer: boolean = false;
   changeMenu:boolean = this.loginService.changeMenu;
   public contactos: Contactos[] = [];
   public ids: any[] = [];
@@ -38,16 +36,29 @@ export class MainComponent implements OnInit {
   nombre!:string;
   comentarioU!:string;
   
+/*users*/
+userRef!: AngularFireList<any>;
+  allUsers!: Observable<any[]>;
+  FilterUsersWitoutUser:any[]=[];
+  FilterUsers:any[]=[]
+  allUserContacts!:Observable<any>;
+  filterUserContacts:any[]=[];
+private _listFilter: string = '';
+
+	public get listFilter(): string {
+		return this._listFilter;
+	}
+	public set listFilter(value: string) {
+		this._listFilter = value;
+		this.filterSearchUsers = this.performFilter(value);
+	}
+
+	filterSearchUsers!:any[];
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
   private chat: ChatService) {
 
-this.allUsers = db.list('usuarios');
-	 this.users = this.allUsers.snapshotChanges().pipe( map(changes => {
-      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
-    }) )
-
-
+ 
     this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
@@ -58,33 +69,112 @@ this.allUsers = db.list('usuarios');
   this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
    this.comentarioItemRef.valueChanges().subscribe(value => {
      this.comentarioU = value;
+
+
  });
 
     const ref = this.storage.ref(`/users/${this.UserId}`);
     this.profileUrl = ref.getDownloadURL();
 
     this.ObtenerContactos();
+this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueChanges();
+    this.allUserContacts.subscribe((contactos:any) => {
+      contactos.map((cont:any) => {
+	this.filterUserContacts.push(cont.id);
+
+      })
+    })
+ this.userRef = this.db.list('usuarios');
+    // Use snapshotChanges().map() to store the key
+ //
+    this.allUsers = this.userRef.snapshotChanges().pipe(
+      map(changes => 
+	  changes.map(c => {
+	    if (c.payload.key != this.UserId) {
+	    return ({ key: c.payload.key, ...c.payload.val() })
+	    }
+	  })
+	 )
+	  
+    );   
+
+    this.allUsers.subscribe( (value) => {
+      value.map(val=>{
+	if (val != null   ) {
+	  console.log(this.FilterUsersWitoutUser.includes(val));
+	  if (!this.FilterUsersWitoutUser.includes(val)) {
+      this.FilterUsersWitoutUser.push(val);
+	  }
+	}
+      })
+    	
+      console.log(this.FilterUsersWitoutUser);
+    } )
+
+    this.ObtenerUsuarios();
+
+    
+
     }
+	performFilter(filterBy: string): any[] {
+	  filterBy = filterBy.toLocaleLowerCase();
+	  return this.FilterUsers.filter( (product):any=>{
+	    return product.name.toLocaleLowerCase().includes(filterBy)
+	  
+	  } )
+	}
+  	
+    public ObtenerUsuarios(){
+    setTimeout(() => {
+  this.FilterUsersWitoutUser.filter((Users)=>{
+	if(this.filterUserContacts.includes(Users.key)){
 
+	}else{
+	  /*verificar el array de usuarios que te llega con el que ya tiene*/
+	  if (this.FilterUsers) {
+	  	
+	  }
+  this.FilterUsers.push(Users); 	
 
-public CambiarSideBar(){
+	}})	
+    
+  this.filterSearchUsers = this.FilterUsers;
+    },1000);
+
+    }
+  public CambiarSideBar(){
   this.loginService.CambiarSideBar();
   this.changeMenu  = !this.changeMenu;
 
   }
-   
-AgregarContacto(){
-	let arr:any[];
-	arr =this.newContact.split(',');
-  this.contactoAgregado = arr[0];
+    	
+  public DeleteFilterUserByKey(key:string){
 
-  this.db.object(`usuarios/${this.UserId}/Contactos/${arr[0]}`).set({
-    'nombre': arr[1],
-    'id': arr[0],
-    'comentario': arr[2]
+
+    for (let index = 0; index < this.FilterUsers.length; index++) {
+      if (this.FilterUsers[index].key === key){
+	console.log(this.FilterUsers[index].key);
+	console.log(index);
+	this.FilterUsers.splice(index,1)
+      }
+    	
+    }
+    
+    	
+
+  }
+  
+  AgregarContacto(key:string,name:string,comentario:string){
+  
+  this.contactoAgregado = key;
+
+  this.db.object(`usuarios/${this.UserId}/Contactos/${key}`).set({
+    'nombre': name,
+    'id': key,
+    'comentario':comentario 
   });
 
-  this.db.object(`usuarios/${arr[0]}/Contactos/${this.UserId}`).set({
+  this.db.object(`usuarios/${key}/Contactos/${this.UserId}`).set({
     'nombre': this.nombre,
     'id': this.UserId,
     'comentario': this.comentarioU
@@ -92,16 +182,22 @@ AgregarContacto(){
 
 
   this.db.object(`chat/privado/${this.UserId} y ${this.contactoAgregado}`).set({
-    'usuarios': this.UserId + ' y ' + arr[0]
+    'usuarios': this.UserId + ' y ' + key
   });
 
   this.ObtenerContactos();
+  this.DeleteFilterUserByKey(key);
+  this.listFilter = '';
+  this.filterSearchUsers = this.FilterUsers;
+
+  this.searchContainer = false;
   }
 
   async ObtenerContactos(){
 
     var cont!: Contactos[];
     var ids!:any[];
+
     this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges(['child_added']).subscribe(
       value => {
 
@@ -140,6 +236,7 @@ AgregarContacto(){
 
   ngOnInit(): void {
     
+    this.ObtenerContactos();
   }
 
   public Chats(posicion:number){
