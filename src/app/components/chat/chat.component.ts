@@ -3,12 +3,13 @@ import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireObject,AngularFireList } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import { rejects } from 'assert';
 import { DatePipe } from '@angular/common';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { ChatService } from 'src/app/services/chat.service';import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @Component({
   selector: 'app-chat',
@@ -39,10 +40,14 @@ export class ChatComponent implements OnInit {
   refM:any;
   vistoArr:any;
   emisor!:any[];
+  storageRef: any;
+  porcentaje!: Observable<any>;
+  procesoStatus = false;
   
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, private db: AngularFireDatabase,
     private chat: ChatService){
-
+    
+    this.storageRef = storage.ref("Multimedia/");
     this.contacto = chat.idContacto;
     this.nombreContacto = chat.nombreContacto;
     this.profileUrl = chat.imgContacto;
@@ -103,6 +108,7 @@ export class ChatComponent implements OnInit {
     'visto': false
      });
   }
+
     this.vistoArr.push(false);
     await this.obtenerMensajes();
 
@@ -114,6 +120,50 @@ export class ChatComponent implements OnInit {
 
   }
 
+ async EnviarArchivo(event: any){
+  
+  var pathFile = event.target.files[0];  
+  var nombre = event.target.files[0].name;
+
+  var idMsg = uuidv4();
+  this.no = new Date().getTime();
+  this.pipe = new DatePipe('en-US');
+  this.today = this.pipe.transform(Date.now(), 'MMM d, y, h:mm:ss a');
+  const uploadTask = this.storage.upload("Multimedia/" + nombre, pathFile); 
+  this.porcentaje = uploadTask.percentageChanges();
+  this.procesoStatus = true;
+  (await uploadTask).ref.getDownloadURL().then(url => {
+    
+  if(this.temp!){
+    this.db.object(`chat/privado/${this.refM}/Mensajes/${idMsg} - ${this.today}`).set({
+     'nombreFile': event.target.files[0].name,
+     'url': url,
+     'mensajeResp': this.temp,
+     'emisor': this.UserId,
+     'fecha': this.today,
+     'no': this.no,
+     'visto': false
+   });
+   this.temp = "";
+
+ }else{
+  this.db.object(`chat/privado/${this.refM}/Mensajes/${idMsg} - ${this.today}`).set({
+   'nombreFile': event.target.files[0].name,
+   'url': url,
+   'emisor': this.UserId,
+   'fecha': this.today,
+   'no': this.no,
+   'visto': false
+    });
+ }
+  });
+  this.procesoStatus = false;
+  }
+
+  Redireccionar(url: string){
+    window.open(url, '_blank');
+  }
+
   TipoMensaje(emisor:string){
     if (this.UserId==emisor){
         return "enviado"
@@ -123,8 +173,10 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  ResponderMensaje(mensaje:string, posicion:number){
+  ResponderMensaje(mensaje:string){
+    if(mensaje){
     this.temp = mensaje;
+    }else {this.temp = "Archivo"}
   }
   
   Cancelar(){
@@ -138,12 +190,10 @@ export class ChatComponent implements OnInit {
     this.db.list(`chat/privado/${this.refM}/Mensajes`, ref=>
     ref.orderByChild('no').limitToLast(25)).valueChanges(['child_added']).subscribe(
       value => { 
-        console.log("triggering");
         msjdb = value as Mensajes[];
         this.emisor = msjdb.map(element =>{
           return element.emisor;
         });
-
         
         this.vistoArr = msjdb.map(element =>{
           return element.visto;
@@ -208,6 +258,8 @@ export class ChatComponent implements OnInit {
 class Mensajes {
   mensaje!: string;
   mensajeResp!: string;
+  nombreFile!: string;
+  url!: string;
   emisor!: string;
   fecha!: string;
   no!: number;

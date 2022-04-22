@@ -18,11 +18,21 @@ export class RegistrarComponent implements OnInit {
     name:'',
     comentario:''
   }
+  imagen:any = "../../../assets/update.jpg";
   constructor(private loginService: LoginService,private db: AngularFireDatabase,private afStorage: AngularFireStorage,private _router: Router ) { }
-     profileUrl!: Observable<string | null>;
+  profileUrl!: Observable<string | null>;
   filePath!: String;
-  upload(event:any) {    
-    this.filePath = event.target.files[0]
+
+  upload(event:any) {
+    if(event.target.files){
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload=(event:any)=>{
+    this.imagen = event.target.result;
+    }
+    this.filePath = event.target.files[0];
+
+    }
   }
   uploadImage(uid:any){
     console.log(this.filePath)

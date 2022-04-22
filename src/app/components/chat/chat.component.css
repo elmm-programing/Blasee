@@ -43,7 +43,6 @@
 
 
 .enviado{
-    box-shadow: 2px 3px 3px #888888;
     display: block;
     float: right;
     background-color: #f7f9fa;
@@ -57,7 +56,6 @@
 }
 
 .recibido{
-    box-shadow: 2px 3px 3px #888888;
     display: block;
     float: left;
     background-color: #f7f9fa;
@@ -84,7 +82,7 @@
 
 }
 
-.msj .lead {
+.bottom p{
 
     font-size: 1rem;
     float: right;
@@ -111,4 +109,9 @@
     background-repeat: no-repeat;
     border: none;
     content: url("../../../assets/unseen.png");
+}
+
+.documento{
+    font-style: italic;
+    text-decoration-line: none;
 }

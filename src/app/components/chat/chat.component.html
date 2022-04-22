@@ -13,24 +13,46 @@
 </ul>
 </div>
 </nav>
+
+<div *ngIf="this.procesoStatus!==false" class="progress" style="height: 3px;">
+  <div class="progress-bar" role="progressbar" [style.width]="(this.porcentaje | async) + '%'"  
+  [attr.aria-valuenow]="(this.porcentaje | async)"
+  aria-valuemin="0" aria-valuemax="100"></div>
+</div>
 <div class="container-fluid bg-dark" *ngIf="data" [ngClass]="this.temp? 'respuesta':'normal'">
 <div id="contenedorMensajes" #contenedorMensajes [scrollTop]="scrollUltimo" class="contenedorMensajes">
 
-  <div  *ngFor="let mensaje of mensajes; let i=index" 
-  class="msj p-2" [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje, i)">
-      <div *ngIf="mensaje.mensajeResp" class="card-header bg-dark text-white text-truncate">
+  <div *ngFor="let mensaje of mensajes; let i=index" 
+  class="msj p-2" [ngClass]="TipoMensaje(mensaje.emisor)" (click)="ResponderMensaje(mensaje.mensaje)">
+     
+    <div *ngIf="mensaje.mensajeResp" class="card-header bg-dark text-white text-truncate">
         <a>{{mensaje.mensajeResp}}</a>
       </div>
-        <a>{{mensaje.mensaje}}</a>
+      
+      <div *ngIf="mensaje.url">
+        <img [src]="mensaje.url" class="img-fluid" style="max-width: 100%; height: auto;" onerror="this. style. display='none'"
+        (click)="Redireccionar(mensaje.url)">
+
+        <div class="card-header">
+          <a href style="text-decoration:none;"><p class="documento text-truncate" (click)="Redireccionar(mensaje.url)">{{mensaje.nombreFile}}</p></a>
+          <img class="img-fluid" (click)="Redireccionar(mensaje.url)" src="../../../assets/clip.png">
+        </div>
+        
+      </div>
+        {{mensaje.mensaje}}
+
+        <div class="bottom" style="float: right;">
         <p class="lead">{{mensaje.fecha}}</p>  
+      </div>
   </div>
 </div>
 </div> 
-<div *ngIf="this.temp" (click)="Cancelar()" style="cursor: pointer;" class="card-header h-3 text-truncate">
+<div *ngIf="this.temp" (click)="Cancelar()" style="z-index: 1; cursor: pointer;" class="card-header h-3 text-truncate">
   <a>{{this.temp}}</a>
 </div>
 <form class="container-fluid bg-opacity-75 bg-dark" style="height: 61.5px;" (ngSubmit)="enviarMensaje()">
 <div class="input-group ">
+  <input id="multimedia" style="display: none;" (change)="EnviarArchivo($event)" type="file">
 <input type="text" class="form-control mt-2 pt-2" placeholder="Escribir mensaje" [(ngModel)]="nuevoMensaje"
 [ngModelOptions]="{standalone:true}" aria-label="Recipient's username" aria-describedby="basic-addon2">
 
@@ -39,9 +61,9 @@
   <button class="btn btn-outline-secondary botones" type="button" (click)="enviarMensaje()">
     <img src="../../../assets/send.png">
   </button>
-  <button class="btn btn-outline-secondary botones" type="button">
+  <label for="multimedia" class="btn btn-outline-secondary botones" type="button">
     <img src="../../../assets/email.png">
-  </button>
+  </label>
 
   </div>
 </div>

@@ -29,8 +29,7 @@ import { ChatComponent } from './components/chat/chat.component';
     RegistrarComponent,
     LandingPageComponent,
     PerfilComponent,
-    ChatComponent,
-    
+    ChatComponent
   ],
   imports: [
     BrowserModule,
