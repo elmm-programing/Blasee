@@ -1,22 +1,11 @@
-<<<<<<< HEAD
-=======
 <div class="container-fluid " style="height: 100vh;">
   <div class="row h-100 ">
 
-    <nav id="sidebarMenu"  class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; ">
->>>>>>> e860996 (1.4.1)
-
-<div class="container-fluid " style="height: 100vh;">
-  <div class="row h-100 ">
-
-<<<<<<< HEAD
     <nav id="sidebarMenu"  class="col-xs-3 col-sm-3 col-md-3 p-0 col-lg-2 d-md-block text-light sidebar " style="background-color: #384D6A; ">
 
 
 <app-perfil *ngIf="!changeMenu" (startReLoadData)="CambiarSideBar()"  ></app-perfil>
-=======
 <app-perfil *ngIf="!changeMenu" (startReLoadData)="CambiarSideBar()"></app-perfil>
->>>>>>> e860996 (1.4.1)
       <div *ngIf="changeMenu" class="p-0">
       	<div class=" container position-sticky p-0">
 <div class="banner row  justify-content-between" style="margin-right: 0.1px">
@@ -51,12 +40,8 @@
   </button>
   <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Buscar usuario" (click)="searchContainer = true" aria-label="Example text with button addon" aria-describedby="button-addon1">
 </div>
-<<<<<<< HEAD
-  <div class="container-fluid  "  *ngIf="UserLogged" id="please-scroll">
-=======
 
   <div class="container-fluid"  *ngIf="UserLogged" id="please-scroll">
->>>>>>> e860996 (1.4.1)
     <div class="p-0" *ngIf="searchContainer" >
       <h5>Contactos globales</h5>
  <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filterSearchUsers; let i=index">
@@ -95,14 +80,9 @@
       </div>      
      </div>
     </nav>
-<<<<<<< HEAD
-    <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10  p-0 h-100 ">
-    <app-chat *ngIf="changeChat" (startReLoadData)="true"></app-chat>
-=======
     <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10 p-0 h-100 ">
     <app-inicio *ngIf="changeChat!==true" (startReLoadData)="true"></app-inicio>
     <app-chat *ngIf="changeChat == true" (startReLoadData)="true"></app-chat>
->>>>>>> e860996 (1.4.1)
     </main>
   </div>
 </div>
