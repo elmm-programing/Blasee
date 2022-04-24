@@ -9,7 +9,12 @@
   </div>
   <div class="d-flex flex-column overflow-auto principal_content principal_content_color" style="height: 100%;">
 
-    <img class="rounded-circle w-50 ms-auto me-auto pt-4 pb-4" [src]="profileUrl | async" alt="">
+    
+  <input id="multimedia" style="display: none;" (change)="actualizarImagen($event)" type="file">
+
+  <label for="multimedia" class="w-50 ms-auto me-auto pt-4 pb-4" type="button">
+    <img class="img-fluid rounded-circle " [src]="profileUrl | async" alt="">
+  </label>
 
     <div class="d-flex flex-column ps-5 pe-3">
 

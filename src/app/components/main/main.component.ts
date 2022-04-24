@@ -101,7 +101,7 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
     this.allUsers.subscribe( (value) => {
       value.map(val=>{
-	if (val != null   ) {
+	if (val != null) {
 	  console.log(this.FilterUsersWitoutUser.includes(val));
 	  if (!this.FilterUsersWitoutUser.includes(val)) {
       this.FilterUsersWitoutUser.push(val);
@@ -114,9 +114,8 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
     this.ObtenerUsuarios();
 
-    
-
     }
+
 	performFilter(filterBy: string): any[] {
 	  filterBy = filterBy.toLocaleLowerCase();
 	  return this.FilterUsers.filter( (product):any=>{
@@ -125,11 +124,19 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 	  } )
 	}
   	
-    public ObtenerUsuarios(){
+  public ObtenerUsuarios(){
+
+    this.filterSearchUsers = [];
+    this.filterUserContacts = [];
+    this.FilterUsers = [];
+    this.FilterUsersWitoutUser = [];
+    this.FilterusersPhotos = [];
+
+
     setTimeout(() => {
   this.FilterUsersWitoutUser.filter((Users)=>{
 	if(this.filterUserContacts.includes(Users.key)){
-
+    
 	}else{
 	  /*verificar el array de usuarios que te llega con el que ya tiene*/
 	  	
@@ -145,7 +152,8 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
   this.filterSearchUsers = this.FilterUsers;
     },1000);
 
-    }
+  }
+
   public CambiarSideBar(){
   this.loginService.CambiarSideBar();
   this.changeMenu  = !this.changeMenu;
@@ -153,7 +161,7 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
   }
     	
   public DeleteFilterUserByKey(key:string){
-
+    
 
     for (let index = 0; index < this.FilterUsers.length; index++) {
       if (this.FilterUsers[index].key === key){
@@ -202,7 +210,7 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
     var cont!: Contactos[];
     var ids!:any[];
 
-    this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges(['child_added']).subscribe(
+    this.db.list('usuarios/' + this.UserId + '/Contactos').valueChanges(['child_added', 'child_changed']).subscribe(
       value => {
 
         this.profileUrlC = [];
@@ -229,6 +237,23 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
       });
 
+
+  }
+
+  EliminarContactos(contacto:string){
+
+
+      setTimeout(()=>
+      {
+        this.changeChat = false;
+  
+      }, 200);
+
+    this.db.object(`usuarios/${this.UserId}/Contactos/${contacto}`).remove();
+    this.db.object(`usuarios/${contacto}/Contactos/${this.UserId}`).remove();
+
+    this.ObtenerUsuarios();
+    this.ObtenerContactos();
 
   }
     

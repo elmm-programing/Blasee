@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import {Observable} from 'rxjs';
+import { contains } from '@firebase/util';
 
 @Component({
   selector: 'app-perfil',
@@ -27,11 +28,15 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
   nombreInput = '';
   comentarioInput = '';
   userRef:AngularFireObject<any> | undefined;
+  ref:any;
+  allUsers!: Observable<any>;
+  allId!: any;
+
 
 
   constructor(private loginService: LoginService,private route: ActivatedRoute,private _router: Router,private storage: AngularFireStorage, public db: AngularFireDatabase) {
 
-         this.UserId = this.route.snapshot.paramMap.get('uid');
+    this.UserId = this.route.snapshot.paramMap.get('uid');
 
 	 this.nameItemRef = db.object(`usuarios/${this.UserId}/name`);
     this.name = this.nameItemRef.valueChanges();
@@ -40,19 +45,24 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
     this.comentario = this.comentarioItemRef.valueChanges();
 
 
+    this.allUsers =  this.db.object(`usuarios`).valueChanges();
 
 /*
     const itemPath =  `usuarios/${this.UserId}`;
       this.item = db.object(itemPath).valueChanges();
       console.log(this.item);
 */
-    console.log(this.UserId);
-const ref = this.storage.ref(`/users/${this.UserId}`);
-     this.profileUrl = ref.getDownloadURL();
+    this.ref = this.storage.ref(`/users/${this.UserId}`);
+     this.profileUrl = this.ref.getDownloadURL();
 
-		
-
+     this.allUsers.subscribe(
+       value => {
+         console.log(value);
+         console.log(value.key);
+       });
+ 
       }
+      
 public HidePerfil(){
   this.startReLoadData.emit();
 
@@ -79,13 +89,28 @@ public HidePerfil(){
     this.userRef = this.db.object(`usuarios/${this.UserId}`)
     this.userRef.update({name: this.nombreInput});
     this.botonNombre = true;
-  };
+    
+  }
 
   actualizarComentario(){
     this.userRef = this.db.object(`usuarios/${this.UserId}`)
     this.userRef.update({comentario: this.comentarioInput});
     this.botonComentario = true;
-  };
+  }
+
+  
+  actualizarImagen(event:any){
+    
+  
+  var pathFile = event.target.files[0];  
+  
+  this.storage.ref("users/" + this.UserId).delete();
+  
+  this.storage.upload("users/" + this.UserId, pathFile).then(()=>{
+
+    this.profileUrl = this.ref.getDownloadURL();
+  });
+  }
 
   ngOnInit(): void {
     console.log(this.UserId);

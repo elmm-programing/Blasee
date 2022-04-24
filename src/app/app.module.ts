@@ -20,6 +20,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { ChatComponent } from './components/chat/chat.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ChatComponent } from './components/chat/chat.component';
     RegistrarComponent,
     LandingPageComponent,
     PerfilComponent,
-    ChatComponent
+    ChatComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,

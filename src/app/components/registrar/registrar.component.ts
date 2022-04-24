@@ -19,7 +19,9 @@ export class RegistrarComponent implements OnInit {
     comentario:''
   }
   imagen:any = "../../../assets/update.jpg";
-  constructor(private loginService: LoginService,private db: AngularFireDatabase,private afStorage: AngularFireStorage,private _router: Router ) { }
+  constructor(private loginService: LoginService,private db: AngularFireDatabase,private afStorage: AngularFireStorage,private _router: Router ) { 
+    loginService.logout();
+  }
   profileUrl!: Observable<string | null>;
   filePath!: String;
 

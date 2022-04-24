@@ -10,6 +10,7 @@ export class LoginComponent implements OnInit {
    UserId:any;
 
   constructor(private loginService: LoginService,private _router: Router) {
+    loginService.logout();
 
   }
 
