@@ -44,9 +44,6 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
 	 this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
     this.comentario = this.comentarioItemRef.valueChanges();
 
-
-    this.allUsers =  this.db.object(`usuarios`).valueChanges();
-
 /*
     const itemPath =  `usuarios/${this.UserId}`;
       this.item = db.object(itemPath).valueChanges();
@@ -55,11 +52,6 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
     this.ref = this.storage.ref(`/users/${this.UserId}`);
      this.profileUrl = this.ref.getDownloadURL();
 
-     this.allUsers.subscribe(
-       value => {
-         console.log(value);
-         console.log(value.key);
-       });
  
       }
       

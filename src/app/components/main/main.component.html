@@ -38,13 +38,14 @@
   <path fill-rule="evenodd"  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
 </svg>
   </button>
-  <input type="text" class="form-control" [(ngModel)]='listFilter' placeholder="Buscar usuario" (click)="searchContainer = true" aria-label="Example text with button addon" aria-describedby="button-addon1">
+  <input type="text" class="form-control"  [formControl]="filter" placeholder="Buscar usuario" (click)="searchContainer = true" aria-label="Example text with button addon" aria-describedby="button-addon1">
 </div>
 
-  <div class="container-fluid"  *ngIf="UserLogged" id="please-scroll">
+<div class="container-fluid"   id="please-scroll">
     <div class="p-0" *ngIf="searchContainer" >
       <h5>Contactos globales</h5>
- <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filterSearchUsers; let i=index">
+      
+ <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let user of filteredStates$ | async">
       <div (click)="AgregarContacto(user.key,user.name,user.comentario)" class="card border-dark contactos" style="max-width: 18rem;">
         <div class="card-header p-0 text-dark"   >
           <img [src]="user.photo|async " class="bi me-2 rounded-circle" width="40" height="42" alt="">
@@ -56,6 +57,8 @@
       </div>
     </div>
     </div>
+
+
     <div class="p-0" *ngIf="!searchContainer">
 
  <div class="row mb-4 mt-3"  style="cursor: pointer;" *ngFor="let contacts of contactos; let i=index">
@@ -79,7 +82,8 @@
     </div>
       </div>      
      </div>
-    </nav>
+
+     </nav>
     <main class="col-xs-9 col-sm-9 col-md-9 col-lg-10 p-0 h-100 ">
     <app-inicio *ngIf="changeChat!==true" (startReLoadData)="true"></app-inicio>
     <app-chat *ngIf="changeChat == true" (startReLoadData)="true"></app-chat>

@@ -59,7 +59,6 @@ export class ChatComponent implements OnInit {
     const ref = this.storage.ref(`/users/${this.contacto}`);
     this.profileUrl = ref.getDownloadURL();
 
-    console.log(this.contacto);
 
     setTimeout(()=> { 
       this.refM = chat.reff;
@@ -198,9 +197,6 @@ export class ChatComponent implements OnInit {
         this.vistoArr = msjdb.map(element =>{
           return element.visto;
         });
-        
-        console.log(this.emisor);
-        console.log(this.vistoArr);
       
         if(this.emisor.length > 0){
           if(this.emisor[this.emisor.length - 1] != this.UserId){
