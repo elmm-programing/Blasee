@@ -1,9 +1,9 @@
 import { Component,OnInit,Output,EventEmitter } from '@angular/core';
 import {LoginService} from 'src/app/services/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireObject } from '@angular/fire/compat/database';
+import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/compat/database';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import {Observable} from 'rxjs';
+import {Observable,map} from 'rxjs';
 import { contains } from '@firebase/util';
 
 @Component({
@@ -31,6 +31,8 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
   ref:any;
   allUsers!: Observable<any>;
   allId!: any;
+allUserRef!: AngularFireObject<any>;
+contactosid!:any[];
 
 
 
@@ -44,6 +46,8 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
 	 this.comentarioItemRef = db.object(`usuarios/${this.UserId}/comentario`);
     this.comentario = this.comentarioItemRef.valueChanges();
 
+
+
 /*
     const itemPath =  `usuarios/${this.UserId}`;
       this.item = db.object(itemPath).valueChanges();
@@ -52,7 +56,9 @@ startReLoadData: EventEmitter<any> = new EventEmitter<any>();
     this.ref = this.storage.ref(`/users/${this.UserId}`);
      this.profileUrl = this.ref.getDownloadURL();
 
- 
+    this.buscarIdContactos()
+     
+
       }
       
 public HidePerfil(){
@@ -68,7 +74,13 @@ public HidePerfil(){
     });
   }
 
-
+  public buscarIdContactos(){
+this.allUserRef = this.db.object(`usuarios/${this.UserId}/Contactos`);
+    this.allUsers = this.allUserRef.valueChanges()
+    this.allUsers.subscribe(values=>{
+      this.contactosid =Object.keys(values) 
+    })
+  }
   ocultarBotonNombre(){
     this.botonNombre = !this.botonNombre;
   }
@@ -78,8 +90,16 @@ public HidePerfil(){
   }
 
   actualizarNombre(){
+    this.buscarIdContactos()
     this.userRef = this.db.object(`usuarios/${this.UserId}`)
     this.userRef.update({name: this.nombreInput});
+
+    this.contactosid.forEach(element=>{
+      this.userRef = this.db.object(`usuarios/${element}/Contactos/${this.UserId}`)
+    this.userRef.update({nombre: this.nombreInput});
+
+    })
+
     this.botonNombre = true;
     
   }
@@ -87,6 +107,13 @@ public HidePerfil(){
   actualizarComentario(){
     this.userRef = this.db.object(`usuarios/${this.UserId}`)
     this.userRef.update({comentario: this.comentarioInput});
+  this.contactosid.forEach(element=>{
+      this.userRef = this.db.object(`usuarios/${element}/Contactos/${this.UserId}`)
+    this.userRef.update({comentario: this.comentarioInput});
+
+    })
+
+
     this.botonComentario = true;
   }
 
@@ -105,7 +132,6 @@ public HidePerfil(){
   }
 
   ngOnInit(): void {
-    console.log(this.UserId);
   }
 
 }
