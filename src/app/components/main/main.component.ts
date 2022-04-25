@@ -242,6 +242,8 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
   EliminarContactos(contacto:string){
 
+    var confirmacion = confirm("¿Estas seguro que quieres eliminar este contacto?");
+    if(confirmacion === true){
 
       setTimeout(()=>
       {
@@ -251,9 +253,11 @@ this.allUserContacts =  this.db.list(`usuarios/${this.UserId}/Contactos`).valueC
 
     this.db.object(`usuarios/${this.UserId}/Contactos/${contacto}`).remove();
     this.db.object(`usuarios/${contacto}/Contactos/${this.UserId}`).remove();
-
-    this.ObtenerUsuarios();
     this.ObtenerContactos();
+
+    }else{
+      return
+    }
 
   }
     
